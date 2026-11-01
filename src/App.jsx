@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import CosmicBackground from './components/CosmicBackground';
 import Navbar from './components/Navbar';
 import OpeningView from './components/OpeningView';
@@ -18,7 +18,6 @@ export default function App() {
   const [isWarping, setIsWarping] = useState(false);
   const [isRocketLaunching, setIsRocketLaunching] = useState(false);
   const [targetLabel, setTargetLabel] = useState('');
-  const [pendingNav, setPendingNav] = useState(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const [isAudioMuted, setIsAudioMuted] = useState(true);
@@ -32,20 +31,18 @@ export default function App() {
     }
   });
 
-  // Launch the realistic rocket on initial page entry (bottom-left to top-right ascending launch!)
+  const rocketTimerRef = useRef(null);
+
+  // Trigger rocket launch on initial entrance (welcoming the user into space)
   useEffect(() => {
     const entryTimer = setTimeout(() => {
-      setTargetLabel('SYSTEM LAUNCH: ENTERING THE FORGOTTEN FRONTIER');
-      setIsRocketLaunching(true);
-      setTimeout(() => {
-        setIsRocketLaunching(false);
-      }, 1350);
-    }, 450);
+      triggerRocketAnimation('SYSTEM LAUNCH: ENTERING THE FORGOTTEN FRONTIER');
+    }, 400);
 
     return () => clearTimeout(entryTimer);
   }, []);
 
-  // Track scroll percentage for the global top bar indicator
+  // Track scroll percentage for global progress bar
   useEffect(() => {
     const handleScroll = () => {
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -57,70 +54,72 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Current active mission object
+  // Current active mission object (guaranteed up-to-date)
   const activeMission = MISSIONS.find(m => m.id === currentMissionId) || MISSIONS[0];
   const targetBody = currentView === 'mission' ? activeMission.body : (currentView === 'destination' ? 'both' : 'moon');
 
-  // Handle Audio Mute/Unmute
-  const handleToggleAudio = () => {
-    const isUnmuted = spaceAudio.toggleMute();
-    setIsAudioMuted(!isUnmuted);
+  // Trigger realistic rocket launch animation helper
+  const triggerRocketAnimation = (label = '') => {
+    if (rocketTimerRef.current) {
+      clearTimeout(rocketTimerRef.current);
+    }
+
+    setTargetLabel(label || 'ORBITAL TRAJECTORY INSERTION');
+    setIsRocketLaunching(true);
+    setIsWarping(true);
+
+    spaceAudio.playRocketFlyby();
+
+    rocketTimerRef.current = setTimeout(() => {
+      setIsRocketLaunching(false);
+      setIsWarping(false);
+    }, 1350);
   };
 
-  // Universal Navigation Handler with Ascending Diagonal Rocket Launch
+  // Universal Navigation Handler (Guarantees instant mission ID update + Rocket launch for EVERY section!)
   const handleNavigate = (view, missionId = null, label = '') => {
-    if (isRocketLaunching) return;
+    // 1. Immediately update mission ID if specified (prevents repeating the first mission!)
+    if (missionId) {
+      setCurrentMissionId(missionId);
+    }
 
+    // 2. Immediately update view & scroll to top
+    setCurrentView(view);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+
+    // 3. Determine descriptive telemetry label
     let displayLabel = label;
     if (!displayLabel) {
       if (view === 'hero') displayLabel = 'TRAJECTORY: ORBITAL PANORAMA';
       else if (view === 'intro') displayLabel = 'TRAJECTORY: PROLOGUE ARCHIVE';
       else if (view === 'destination') displayLabel = 'TRAJECTORY: DESTINATION MATRIX';
       else if (view === 'mission') {
-        const targetM = MISSIONS.find(m => m.id === missionId) || activeMission;
-        displayLabel = `TRAJECTORY: ${targetM.artifact.toUpperCase()}`;
+        const targetM = MISSIONS.find(m => m.id === (missionId || currentMissionId));
+        displayLabel = `TRAJECTORY: ${targetM ? targetM.artifact.toUpperCase() : 'MISSION'}`;
       } else if (view === 'learn') displayLabel = 'TRAJECTORY: SYNTHESIS & REFLECTION';
     }
 
-    setTargetLabel(displayLabel);
-    setPendingNav({ view, missionId });
-    setIsRocketLaunching(true);
-    setIsWarping(true);
-
-    spaceAudio.playRocketFlyby();
-
-    setTimeout(() => {
-      setIsRocketLaunching(false);
-      setIsWarping(false);
-    }, 1350);
+    // 4. Fire the rocket launch transition on EVERY section change
+    triggerRocketAnimation(displayLabel);
   };
 
-  // Midpoint handoff at 550ms
-  const handleTransitionMidpoint = () => {
-    if (pendingNav) {
-      if (pendingNav.missionId) {
-        setCurrentMissionId(pendingNav.missionId);
-      }
-      setCurrentView(pendingNav.view);
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      setPendingNav(null);
-    }
-  };
-
+  // Begin journey from Page 2
   const handleStartJourney = () => {
     handleNavigate('destination', null, 'ASCENT TRAJECTORY: LUNAR & MARTIAN DESTINATIONS');
   };
 
-  const handleTriggerManualRocket = () => {
-    if (isRocketLaunching) return;
-    setTargetLabel('MANUAL TELEMETRY: ASCENDING RECONNAISSANCE FLYBY');
-    setIsRocketLaunching(true);
-    spaceAudio.playRocketFlyby();
-    setTimeout(() => {
-      setIsRocketLaunching(false);
-    }, 1350);
+  // Audio Toggle
+  const handleToggleAudio = () => {
+    const isUnmuted = spaceAudio.toggleMute();
+    setIsAudioMuted(!isUnmuted);
   };
 
+  // Manual Rocket Button
+  const handleTriggerManualRocket = () => {
+    triggerRocketAnimation('MANUAL TELEMETRY: ASCENDING RECONNAISSANCE FLYBY');
+  };
+
+  // Handle Quiz completion badge persistence
   const handleCompleteQuiz = (missionId, badgeName) => {
     if (!unlockedBadges.includes(badgeName)) {
       const updated = [...unlockedBadges, badgeName];
@@ -132,46 +131,54 @@ export default function App() {
   };
 
   // ================= AUTOMATIC MISSION PROGRESSION LOGIC =================
-  // Moon (3) -> Auto advances across Moon 1, 2, 3 -> Automatically launches to Mars!
-  // Mars (3) -> Auto advances across Mars 1, 2, 3 -> Automatically launches to Moon!
-  // When both topics (all 6) are complete, automatically launches to What Did We Learn?
+  // Moon 1 (Apollo 11) -> Moon 2 (Apollo 15) -> Moon 3 (Laser Retroreflector) -> Mars 1 (Opportunity)
+  // Mars 1 (Opportunity) -> Mars 2 (Ingenuity) -> Mars 3 (Viking 1) -> Moon 1 (Apollo 11)
+  // When all 6 are completed -> launches to What Did We Learn?
   const handleAutoAdvance = (completedMissionId) => {
     const moonIds = ['apollo-11-descent-stage', 'apollo-15-rover', 'lunar-retroreflector'];
     const marsIds = ['opportunity-rover', 'ingenuity-helicopter', 'viking-1-lander'];
 
     if (completedMissionId === 'apollo-11-descent-stage') {
+      // Advance to Moon Mission 2
       handleNavigate('mission', 'apollo-15-rover', 'TRAJECTORY: APOLLO 15 LUNAR ROVER');
     } else if (completedMissionId === 'apollo-15-rover') {
+      // Advance to Moon Mission 3
       handleNavigate('mission', 'lunar-retroreflector', 'TRAJECTORY: LASER RETROREFLECTOR');
     } else if (completedMissionId === 'lunar-retroreflector') {
-      // All 3 Moon missions complete! Check if any Mars missions remain uncompleted
+      // All 3 Moon missions finished! Auto-advance to Mars!
       const remainingMars = marsIds.filter(id => {
         const m = MISSIONS.find(item => item.id === id);
         return !unlockedBadges.includes(m?.quiz.badgeName);
       });
 
       if (remainingMars.length > 0) {
-        const nextMars = MISSIONS.find(item => item.id === remainingMars[0]);
-        handleNavigate('mission', remainingMars[0], `🌕 3 MOON MISSIONS COMPLETE ➔ LAUNCHING TO MARS: ${nextMars?.artifact.toUpperCase()}`);
+        const nextMarsId = remainingMars[0];
+        const nextMars = MISSIONS.find(item => item.id === nextMarsId);
+        handleNavigate('mission', nextMarsId, `🌕 3 MOON MISSIONS COMPLETE ➔ LAUNCHING TO MARS: ${nextMars?.artifact.toUpperCase()}`);
       } else {
-        handleNavigate('learn', null, 'ALL 6 EXPEDITIONS COMPLETE ➔ PROCEEDING TO WHAT WE LEARNED');
+        // Both Moon and Mars are done!
+        handleNavigate('learn', null, 'ALL 6 EXPEDITIONS COMPLETE ➔ WHAT DID WE LEARN?');
       }
     } else if (completedMissionId === 'opportunity-rover') {
+      // Advance to Mars Mission 2
       handleNavigate('mission', 'ingenuity-helicopter', 'TRAJECTORY: INGENUITY HELICOPTER');
     } else if (completedMissionId === 'ingenuity-helicopter') {
+      // Advance to Mars Mission 3
       handleNavigate('mission', 'viking-1-lander', 'TRAJECTORY: VIKING 1 LANDER');
     } else if (completedMissionId === 'viking-1-lander') {
-      // All 3 Mars missions complete! Check if any Moon missions remain uncompleted
+      // All 3 Mars missions finished! Auto-advance to Moon!
       const remainingMoon = moonIds.filter(id => {
         const m = MISSIONS.find(item => item.id === id);
         return !unlockedBadges.includes(m?.quiz.badgeName);
       });
 
       if (remainingMoon.length > 0) {
-        const nextMoon = MISSIONS.find(item => item.id === remainingMoon[0]);
-        handleNavigate('mission', remainingMoon[0], `🔴 3 MARS MISSIONS COMPLETE ➔ LAUNCHING TO THE MOON: ${nextMoon?.artifact.toUpperCase()}`);
+        const nextMoonId = remainingMoon[0];
+        const nextMoon = MISSIONS.find(item => item.id === nextMoonId);
+        handleNavigate('mission', nextMoonId, `🔴 3 MARS MISSIONS COMPLETE ➔ LAUNCHING TO THE MOON: ${nextMoon?.artifact.toUpperCase()}`);
       } else {
-        handleNavigate('learn', null, 'ALL 6 EXPEDITIONS COMPLETE ➔ PROCEEDING TO WHAT WE LEARNED');
+        // Both Moon and Mars are done!
+        handleNavigate('learn', null, 'ALL 6 EXPEDITIONS COMPLETE ➔ WHAT DID WE LEARN?');
       }
     }
   };
@@ -200,11 +207,10 @@ export default function App() {
       {/* Photorealistic Orbital Aerospace Rocket Ascent Transition (Ascending 33° Graph Vector) */}
       <RocketFlybyTransition
         isActive={isRocketLaunching}
-        onTransitionMidpoint={handleTransitionMidpoint}
         targetLabel={targetLabel}
       />
 
-      {/* Interactive Solar System Scroll HUD Mini-Map Radar */}
+      {/* Interactive Solar System Scroll HUD Mini-Map Radar (Desktop & Tablet) */}
       <SolarSystemScrollHUD onTriggerRocket={handleTriggerManualRocket} />
 
       {/* Navigation Bar */}
@@ -255,6 +261,7 @@ export default function App() {
         {/* PAGE 4 & 5: Individual Mission Pages (Story, Timeline, Interactive Map, Facts, Quiz with Auto-Advance) */}
         {currentView === 'mission' && (
           <MissionDetailView
+            key={activeMission.id} // Re-mount key ensures clean state on every mission change!
             mission={activeMission}
             allMissions={MISSIONS}
             onBackToDestinations={() => handleNavigate('destination', null, 'ASCENT: CELESTIAL HUB')}
