@@ -304,6 +304,18 @@ export default function Navbar({
           >
             5. What Did We Learn?
           </button>
+          {onTriggerRocket && (
+            <button
+              onClick={() => {
+                onTriggerRocket();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left p-2 mt-2 rounded text-xs font-mono text-amber-300 hover:bg-amber-950/30 flex items-center gap-2 border border-amber-500/30"
+            >
+              <Rocket className="w-4 h-4 text-amber-400" />
+              <span>Launch Rocket Flyby</span>
+            </button>
+          )}
         </div>
       )}
     </nav>
