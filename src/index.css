@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Space Grotesk', system-ui, sans-serif;
+    --font-cinematic: 'Cinzel', serif;
+    --font-telemetry: 'Orbitron', monospace;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #02040a;
+    color: #f1f5f9;
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom galaxy scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #02040a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #38bdf8, #a855f7, #f59e0b);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #06b6d4, #d946ef, #fbbf24);
+}
+
+/* ================= GALAXY THEMED PANELS & NEBULA SHIMMER ================= */
+.glass-panel {
+  background: rgba(10, 15, 30, 0.75);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(168, 85, 247, 0.22);
+  box-shadow: 0 8px 32px 0 rgba(11, 7, 24, 0.6);
+}
+
+.glass-panel:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 12px 40px 0 rgba(56, 189, 248, 0.12);
+}
+
+.glass-panel-glow {
+  background: linear-gradient(135deg, rgba(17, 24, 48, 0.88) 0%, rgba(30, 16, 50, 0.85) 100%);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.16), 0 0 60px rgba(168, 85, 247, 0.12);
+}
+
+.glass-panel-mars {
+  background: linear-gradient(135deg, rgba(35, 15, 18, 0.85) 0%, rgba(20, 10, 25, 0.82) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(249, 115, 22, 0.35);
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.16);
+}
+
+.font-cinematic {
+  font-family: 'Cinzel', serif;
+}
+
+.font-telemetry {
+  font-family: 'Orbitron', monospace;
+}
+
+/* Galaxy Nebula Background overlay */
+.galaxy-nebula-glow {
+  background: radial-gradient(circle at 50% 30%, rgba(168, 85, 247, 0.12) 0%, rgba(56, 189, 248, 0.08) 35%, transparent 70%);
+}
+
+/* ================= CINEMATIC ASCENDING ROCKET LAUNCH (BOTTOM-LEFT TO TOP-RIGHT) ================= */
+@keyframes rocket-diagonal-launch {
+  0% {
+    transform: translate(-65vw, 65vh) scale(0.72);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  48% {
+    transform: translate(0, 0) scale(1.08);
+  }
+  62% {
+    transform: translate(16vw, -16vh) scale(1.02);
+  }
+  100% {
+    transform: translate(70vw, -70vh) scale(0.85);
+    opacity: 0.95;
+  }
+}
+
+.animate-rocket-diagonal-launch {
+  animation: rocket-diagonal-launch 1.35s cubic-bezier(0.22, 0.1, 0.25, 1) forwards;
+}
+
+/* Diagonal Lens Flare flash along flight path */
+@keyframes diagonal-lens-flare {
+  0%, 32% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-33deg) scaleY(0.2);
+  }
+  48% {
+    opacity: 0.98;
+    transform: translate(-50%, -50%) rotate(-33deg) scaleY(1.5);
+  }
+  58% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) rotate(-33deg) scaleY(1.0);
+  }
+  75%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-33deg) scaleY(0.1);
+  }
+}
+
+.animate-diagonal-lens-flare {
+  animation: diagonal-lens-flare 1.35s ease-out forwards;
+}
+
+/* Camera rumble vibration */
+@keyframes camera-rumble {
+  0%, 100% { transform: translate(0, 0); }
+  35% { transform: translate(-2.5px, 2px); }
+  42% { transform: translate(3px, -2px); }
+  48% { transform: translate(-2px, -2.5px); }
+  55% { transform: translate(2.5px, 1.5px); }
+  65% { transform: translate(-1px, 0.5px); }
+}
+
+.screen-rumble {
+  animation: camera-rumble 1.35s ease-in-out;
+}
