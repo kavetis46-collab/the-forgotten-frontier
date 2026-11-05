@@ -7,7 +7,7 @@ export const MISSIONS = [
     id: 'apollo-11-descent-stage',
     body: 'moon',
     badge: 'Apollo 11 LM-5',
-    title: 'The Part of Eagle That Never Came Home',
+    title: 'The Part of the Eagle That Never Came Home',
     artifact: 'Apollo 11 Lunar Module Descent Stage',
     siteName: 'Tranquility Base (Mare Tranquillitatis)',
     landingDate: 'July 20, 1969',
@@ -26,7 +26,7 @@ export const MISSIONS = [
     accentColor: '#38bdf8', // Cyan lunar glow
     status: 'Permanent Historic Monument',
 
-    overview: 'When Neil Armstrong and Buzz Aldrin roared into lunar orbit to rejoin Michael Collins, only the upper half of their ship lifted off. The golden four-legged descent stage was left behind in the silent dust—serving both as their launchpad to life and humanity’s eternal first extraterrestrial monument.',
+    overview: 'The astronauts returned. The mission was complete. But one part of their spacecraft never made the journey home. It remained on the Moon, holding a story that the world should never forget.',
 
     storyTitle: 'THE EAGLE: A MACHINE LEFT BEHIND ON THE MOON',
 
