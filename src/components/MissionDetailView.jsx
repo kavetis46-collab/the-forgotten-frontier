@@ -274,6 +274,19 @@ export default function MissionDetailView({
               {/* Story Chapters / Paragraphs & Inserted Archival Photos */}
               {mission.story.map((chapter, idx) => (
                 <div key={idx} className="space-y-6">
+                  {/* Chapter Subheading if present */}
+                  {chapter.heading && (
+                    <div className="pt-4 pb-2 border-t border-slate-800/80">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                        <span>Historical Turning Point</span>
+                      </div>
+                      <h4 className="text-xl sm:text-2xl md:text-3xl font-bold text-white font-cinematic tracking-wide">
+                        {chapter.heading}
+                      </h4>
+                    </div>
+                  )}
+
                   {/* Narrative Text Paragraphs */}
                   {chapter.paragraphs && (
                     <div className="space-y-4 max-w-4xl">

@@ -68,7 +68,14 @@ export const MISSIONS = [
         sectionId: 4,
         paragraphs: [
           'Armstrong and Aldrin stepped onto the Moon, explored the surface and collected samples. Their mission was a success.',
-          'But what happened to the spacecraft that brought them there?',
+          'But what happened to the spacecraft that brought them there?'
+        ]
+      },
+      {
+        sectionId: 'why-it-had-to-stay-behind',
+        heading: 'Why it had to stay behind',
+        paragraphs: [
+          'The Eagle was never meant to return to Earth as one complete spacecraft. Its lower half had done its job — bringing the astronauts safely to the Moon. So, Armstrong and Aldrin climbed into the upper half, which lifted off to take them back to Michael Collins. The lower half stayed behind at Tranquility Base, becoming a lasting reminder of the journey that changed history.',
           'Eagle was designed in two stages. The lower part, called the Descent Stage, helped the spacecraft land. The upper part, called the Ascent Stage, carried the astronauts back into lunar orbit.',
           'When the astronauts were ready to leave, the Ascent Stage lifted off, while the Descent Stage stayed behind.'
         ],
