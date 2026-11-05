@@ -398,22 +398,25 @@ export default function CosmicBackground({ currentView, targetBody, isWarping })
       satGroup.position.x = 1.5 + Math.cos(elapsed * 0.5) * 0.3;
       satGroup.rotation.y += 0.15 * delta;
 
-      // Scroll-driven camera ascent: pulls back to reveal the ENTIRE Solar System!
+      // Scroll-driven camera ascent: pulls back to reveal the ENTIRE Solar System on main view
+      const isMissionView = currentView === 'mission';
+      const effectiveS = isMissionView ? 0 : s;
       const basePos = state.targetCameraPos;
-      const parallaxX = state.mouseNorm.x * (1.2 + s * 1.5);
-      const parallaxY = state.mouseNorm.y * (0.8 + s * 1.0);
+      const parallaxX = state.mouseNorm.x * (1.2 + effectiveS * 1.5);
+      const parallaxY = state.mouseNorm.y * (0.8 + effectiveS * 1.0);
 
-      const scrollCamX = THREE.MathUtils.lerp(basePos.x, 15, s);
-      const scrollCamY = THREE.MathUtils.lerp(basePos.y, 48, s);
-      const scrollCamZ = THREE.MathUtils.lerp(basePos.z, 88, s);
+      const scrollCamX = THREE.MathUtils.lerp(basePos.x, 15, effectiveS);
+      const scrollCamY = THREE.MathUtils.lerp(basePos.y, 48, effectiveS);
+      const scrollCamZ = THREE.MathUtils.lerp(basePos.z, 88, effectiveS);
 
-      state.cameraPos.x += (scrollCamX + parallaxX - state.cameraPos.x) * (delta * 3.0);
-      state.cameraPos.y += (scrollCamY + parallaxY - state.cameraPos.y) * (delta * 3.0);
-      state.cameraPos.z += (scrollCamZ - state.cameraPos.z) * (delta * 3.0);
+      const lerpFactor = Math.min(delta * 4.0, 0.2);
+      state.cameraPos.x += (scrollCamX + parallaxX - state.cameraPos.x) * lerpFactor;
+      state.cameraPos.y += (scrollCamY + parallaxY - state.cameraPos.y) * lerpFactor;
+      state.cameraPos.z += (scrollCamZ - state.cameraPos.z) * lerpFactor;
 
-      const targetLookX = THREE.MathUtils.lerp(state.cameraTarget.x, -5, s);
-      const targetLookY = THREE.MathUtils.lerp(state.cameraTarget.y, -4, s);
-      const targetLookZ = THREE.MathUtils.lerp(state.cameraTarget.z, -15, s);
+      const targetLookX = THREE.MathUtils.lerp(state.cameraTarget.x, -5, effectiveS);
+      const targetLookY = THREE.MathUtils.lerp(state.cameraTarget.y, -4, effectiveS);
+      const targetLookZ = THREE.MathUtils.lerp(state.cameraTarget.z, -15, effectiveS);
 
       camera.position.copy(state.cameraPos);
       camera.lookAt(targetLookX, targetLookY, targetLookZ);
