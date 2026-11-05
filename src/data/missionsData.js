@@ -177,7 +177,7 @@ export const MISSIONS = [
     id: 'apollo-15-rover',
     body: 'moon',
     badge: 'Apollo 15 LRV-001',
-    title: 'The Dune Buggy Parked Forever at Hadley Rille',
+    title: 'Four Wheels Across the Moon',
     artifact: 'Lunar Roving Vehicle (LRV-001)',
     siteName: 'Hadley-Apennine (Palus Putredinis)',
     landingDate: 'July 30, 1971',
@@ -198,7 +198,7 @@ export const MISSIONS = [
 
     overview: 'The first astronauts left footprints on the moon, but the next explorers want to leave something more—tracks that would travel far beyond their landing site. That is where the moon buggy came in.',
 
-    storyTitle: 'THE DUNE BUGGY: PARKED FOREVER AT HADLEY RILLE',
+    storyTitle: 'FOUR WHEELS ACROSS THE MOON',
 
     story: [
       {
