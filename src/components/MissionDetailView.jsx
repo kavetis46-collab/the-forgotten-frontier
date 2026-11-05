@@ -364,22 +364,47 @@ export default function MissionDetailView({
                   )}
 
                   {/* Poetic Concluding Tribute */}
-                  {chapter.closingTribute && (
-                    <div className="mt-12 p-8 sm:p-10 rounded-2xl bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-cyan-950/40 border-2 border-cyan-500/40 shadow-2xl text-center relative overflow-hidden">
-                      <div className="max-w-2xl mx-auto space-y-4">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-telemetry uppercase tracking-wider">
-                          <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-                          <span>Eternal Lunar Heritage</span>
+                  {chapter.closingTribute && (() => {
+                    const text = chapter.closingTribute;
+                    let part1 = text;
+                    let part2 = '';
+                    const splitIdx = text.search(/,\s*(and a|And the)/i);
+                    if (splitIdx !== -1) {
+                      part1 = text.substring(0, splitIdx + 1);
+                      part2 = text.substring(splitIdx + 1).trim();
+                    } else {
+                      const periodIdx = text.lastIndexOf('. ');
+                      if (periodIdx !== -1) {
+                        part1 = text.substring(0, periodIdx + 1);
+                        part2 = text.substring(periodIdx + 2).trim();
+                      }
+                    }
+
+                    return (
+                      <div className="mt-12 p-8 sm:p-10 rounded-2xl bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-cyan-950/40 border-2 border-cyan-500/40 shadow-2xl text-center relative overflow-hidden">
+                        <div className="max-w-3xl mx-auto space-y-4">
+                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-telemetry uppercase tracking-wider">
+                            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                            <span>Eternal Lunar Heritage</span>
+                          </div>
+                          <p className="font-cinematic text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-wide leading-relaxed">
+                            {part2 ? (
+                              <>
+                                {part1} <br className="hidden sm:inline" />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-amber-300">
+                                  {part2}
+                                </span>
+                              </>
+                            ) : (
+                              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-amber-300">
+                                {text}
+                              </span>
+                            )}
+                          </p>
                         </div>
-                        <p className="font-cinematic text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-wide leading-relaxed">
-                          The astronauts came home. Their footprints remained. <br className="hidden sm:inline" />
-                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-amber-300">
-                            And the Eagle left a part of itself behind.
-                          </span>
-                        </p>
                       </div>
-                    </div>
-                  )}
+                    );
+                  })()}
                 </div>
               ))}
             </div>

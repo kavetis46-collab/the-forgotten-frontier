@@ -238,7 +238,7 @@ export const MISSIONS = [
         paragraphs: [
           'And there it remains — a little explorer from Earth, parked forever at Hadley, with no driver coming back to start its next journey.'
         ],
-        closingTribute: 'And there it remains — a little explorer from Earth, parked forever at Hadley, with no driver coming back to start its next journey.'
+        closingTribute: 'The astronauts returned home, their tracks remained, and a little moon buggy became a silent explorer, parked forever on the lunar surface.'
       }
     ],
 
