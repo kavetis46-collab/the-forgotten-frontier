@@ -13,7 +13,9 @@ import {
   Lightbulb, 
   HelpCircle,
   ExternalLink,
-  ChevronDown
+  ChevronDown,
+  ZoomIn,
+  Quote
 } from 'lucide-react';
 import VisualTimeline from './VisualTimeline';
 import InteractiveSurfaceMap from './InteractiveSurfaceMap';
@@ -251,48 +253,208 @@ export default function MissionDetailView({
             </div>
           </div>
 
-          <div className="space-y-10">
-            {mission.story.map((chapter, idx) => (
-              <div 
-                key={idx}
-                className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800/80 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
-              >
-                <div className={`space-y-4 ${idx % 2 === 0 ? 'lg:col-span-7' : 'lg:col-span-7 lg:order-2'}`}>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white font-cinematic leading-snug">
-                    {chapter.heading}
-                  </h3>
-                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                    {chapter.text}
-                  </p>
-                </div>
-
-                <div className={`relative group ${idx % 2 === 0 ? 'lg:col-span-5' : 'lg:col-span-5 lg:order-1'}`}>
-                  <div 
-                    onClick={() => {
-                      spaceAudio.playClick();
-                      setLightboxPhoto(chapter);
-                    }}
-                    className="relative cursor-pointer overflow-hidden rounded-xl border border-slate-700/80 shadow-2xl bg-black"
-                  >
-                    <img
-                      src={chapter.image}
-                      alt={chapter.caption}
-                      className="w-full h-64 sm:h-72 object-cover transition-transform duration-500 group-hover:scale-105"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-xs font-mono text-white backdrop-blur-xs">
-                      <span>Click to Enlarge NASA Photo</span>
-                    </div>
+          {/* Dedicated Structured Narrative Layout (e.g. Apollo 11) */}
+          {mission.story[0]?.paragraphs ? (
+            <div className="space-y-12">
+              {/* Story Heading Banner */}
+              {mission.storyTitle && (
+                <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-slate-900/90 via-cyan-950/40 to-slate-900/90 border border-cyan-500/30 shadow-2xl backdrop-blur-xl">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                    <span className="text-xs font-telemetry tracking-widest text-cyan-400 uppercase font-semibold">
+                      ARCHIVAL NARRATIVE RECORD // APOLLO 11 HISTORIC DISPATCH
+                    </span>
                   </div>
-                  <p className="text-xs text-slate-400 mt-2 italic px-1">
-                    {chapter.caption}
-                  </p>
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-black font-cinematic text-white tracking-wide">
+                    {mission.storyTitle}
+                  </h3>
                 </div>
-              </div>
-            ))}
-          </div>
+              )}
+
+              {/* Story Chapters / Paragraphs & Inserted Archival Photos */}
+              {mission.story.map((chapter, idx) => (
+                <div key={idx} className="space-y-6">
+                  {/* Narrative Text Paragraphs */}
+                  {chapter.paragraphs && (
+                    <div className="space-y-4 max-w-4xl">
+                      {chapter.paragraphs.map((p, pIdx) => (
+                        <p key={pIdx} className="text-slate-200 text-base sm:text-lg leading-relaxed font-normal">
+                          {p}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Historic Apollo Transmission Callout */}
+                  {chapter.transmissionQuote && (
+                    <div className="my-8 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-cyan-950/70 via-slate-900/90 to-purple-950/60 border-2 border-cyan-400/50 shadow-2xl relative overflow-hidden">
+                      <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+                        <Radio className="w-28 h-28 text-cyan-300" />
+                      </div>
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span className="font-telemetry text-xs tracking-widest text-cyan-300 font-bold uppercase">
+                          LUNAR SURFACE TRANSMISSION • TRANQUILITY BASE • 20 JULY 1969
+                        </span>
+                      </div>
+                      <blockquote className="font-cinematic text-2xl sm:text-3xl font-black text-white tracking-wide italic leading-snug">
+                        “{chapter.transmissionQuote}”
+                      </blockquote>
+                      <div className="mt-3 flex items-center gap-2 text-xs font-mono text-slate-400">
+                        <span className="text-cyan-400 font-bold">— Neil Armstrong</span>
+                        <span>•</span>
+                        <span>Commander, Apollo 11 Lunar Module Eagle</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Embedded Archival Photo Card with Distinct Telemetry Font */}
+                  {chapter.image && (
+                    <div className="my-8 rounded-2xl bg-gradient-to-br from-slate-900/90 via-slate-950/95 to-slate-900/90 border border-cyan-500/35 p-5 sm:p-7 shadow-2xl backdrop-blur-xl">
+                      {/* Top Header Bar */}
+                      <div className="flex items-center justify-between gap-3 mb-4 border-b border-cyan-500/20 pb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                          <span className="font-telemetry text-xs uppercase tracking-widest text-cyan-400 font-bold">
+                            ARCHIVAL RECORD // TRANQUILITY BASE ARTIFACT {idx + 1}
+                          </span>
+                        </div>
+                        <button
+                          onClick={() => {
+                            spaceAudio.playClick();
+                            setLightboxPhoto({
+                              image: chapter.image,
+                              heading: chapter.imageTopic,
+                              caption: chapter.imageDescription
+                            });
+                          }}
+                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-slate-800/80 hover:bg-cyan-500/20 border border-slate-700 hover:border-cyan-500/40 text-[11px] font-mono text-cyan-300 transition-colors cursor-pointer"
+                        >
+                          <ZoomIn className="w-3.5 h-3.5" />
+                          <span>Enlarge NASA Photo</span>
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                        {/* Photo Container */}
+                        <div 
+                          onClick={() => {
+                            spaceAudio.playClick();
+                            setLightboxPhoto({
+                              image: chapter.image,
+                              heading: chapter.imageTopic,
+                              caption: chapter.imageDescription
+                            });
+                          }}
+                          className="lg:col-span-5 relative group cursor-pointer overflow-hidden rounded-xl border border-cyan-500/40 bg-black/90 flex items-center justify-center p-2 shadow-xl hover:border-cyan-400 transition-colors"
+                        >
+                          <img 
+                            src={chapter.image} 
+                            alt={chapter.imageTopic}
+                            className="max-h-72 w-full object-contain rounded-lg transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-xs font-telemetry text-cyan-300 backdrop-blur-xs rounded-lg">
+                            <ZoomIn className="w-4 h-4" />
+                            <span>Click to Enlarge</span>
+                          </div>
+                        </div>
+
+                        {/* Distinct Typography Description Box */}
+                        <div className="lg:col-span-7 space-y-3.5">
+                          {/* Exact Inscription / Heading From Inside Image */}
+                          <div className="p-4 rounded-xl bg-cyan-950/40 border border-cyan-500/30">
+                            <span className="text-[10px] font-telemetry tracking-widest text-cyan-400 uppercase font-bold block mb-1">
+                              ✦ Inscription From Archive Record
+                            </span>
+                            <h4 className="font-telemetry font-bold text-cyan-200 text-sm sm:text-base leading-snug tracking-wide">
+                              “{chapter.imageTopic}”
+                            </h4>
+                            {chapter.imageTranslation && (
+                              <p className="text-xs text-slate-300 font-mono italic mt-2 border-t border-cyan-500/20 pt-2">
+                                <span className="text-cyan-400 font-semibold">Translation:</span> “{chapter.imageTranslation}”
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Continuing Description in Distinct Archival Font */}
+                          <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+                            <span className="text-[10px] font-mono tracking-widest text-amber-400 uppercase font-semibold block mb-1">
+                              ◈ Archival Context & Curator Dispatch
+                            </span>
+                            <p className="font-mono text-xs sm:text-sm text-slate-300 leading-relaxed">
+                              {chapter.imageDescription}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Poetic Concluding Tribute */}
+                  {chapter.closingTribute && (
+                    <div className="mt-12 p-8 sm:p-10 rounded-2xl bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-cyan-950/40 border-2 border-cyan-500/40 shadow-2xl text-center relative overflow-hidden">
+                      <div className="max-w-2xl mx-auto space-y-4">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-telemetry uppercase tracking-wider">
+                          <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                          <span>Eternal Lunar Heritage</span>
+                        </div>
+                        <p className="font-cinematic text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-wide leading-relaxed">
+                          The astronauts came home. Their footprints remained. <br className="hidden sm:inline" />
+                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-amber-300">
+                            And the Eagle left a part of itself behind.
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            /* Standard Chapter Layout for Other Missions */
+            <div className="space-y-10">
+              {mission.story.map((chapter, idx) => (
+                <div 
+                  key={idx}
+                  className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800/80 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+                >
+                  <div className={`space-y-4 ${idx % 2 === 0 ? 'lg:col-span-7' : 'lg:col-span-7 lg:order-2'}`}>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white font-cinematic leading-snug">
+                      {chapter.heading}
+                    </h3>
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                      {chapter.text}
+                    </p>
+                  </div>
+
+                  <div className={`relative group ${idx % 2 === 0 ? 'lg:col-span-5' : 'lg:col-span-5 lg:order-1'}`}>
+                    <div 
+                      onClick={() => {
+                        spaceAudio.playClick();
+                        setLightboxPhoto(chapter);
+                      }}
+                      className="relative cursor-pointer overflow-hidden rounded-xl border border-slate-700/80 shadow-2xl bg-black"
+                    >
+                      <img
+                        src={chapter.image}
+                        alt={chapter.caption}
+                        className="w-full h-64 sm:h-72 object-cover transition-transform duration-500 group-hover:scale-105"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-xs font-mono text-white backdrop-blur-xs">
+                        <span>Click to Enlarge NASA Photo</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-slate-400 mt-2 italic px-1">
+                      {chapter.caption}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* ================= SECTION B: MISSION TIMELINE ================= */}

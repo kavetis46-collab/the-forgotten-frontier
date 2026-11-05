@@ -28,24 +28,63 @@ export const MISSIONS = [
 
     overview: 'When Neil Armstrong and Buzz Aldrin roared into lunar orbit to rejoin Michael Collins, only the upper half of their ship lifted off. The golden four-legged descent stage was left behind in the silent dust—serving both as their launchpad to life and humanity’s eternal first extraterrestrial monument.',
 
+    storyTitle: 'THE EAGLE: A MACHINE LEFT BEHIND ON THE MOON',
+
     story: [
       {
-        heading: 'A Sacrificial Launchpad in the Sea of Tranquility',
-        text: 'On July 20, 1969, at 20:17 UTC, the Lunar Module Eagle touched down in Mare Tranquillitatis with barely 25 seconds of fuel remaining. Armstrong announced to an anxious world: "Houston, Tranquility Base here. The Eagle has landed." But Eagle was actually two spacecraft joined as one: the pressurized Ascent Stage where the astronauts lived, and the massive octagonal Descent Stage beneath them, carrying the rocket engine, landing gear, and heavy scientific experiments.',
-        image: 'https://images-assets.nasa.gov/image/as11-40-5886/as11-40-5886~orig.jpg',
-        caption: 'Buzz Aldrin steps down the ladder of Eagle, descending toward the untouched lunar dust.'
+        sectionId: 1,
+        paragraphs: [
+          'Imagine travelling nearly 384,000 kilometres from Earth, reaching another world and leaving behind a machine that helped make history.',
+          'That is exactly what happened during Apollo 11.',
+          'On 16 July 1969, three astronauts — Neil Armstrong, Buzz Aldrin and Michael Collins — began their historic journey aboard the Apollo 11 mission.'
+        ],
+        image: '/images/apollo11/apollo11-astronauts.jpg',
+        imageTopic: 'Astronaut Michael Collins (90), die in de Apollo 11 achterbleef, overleden',
+        imageTranslation: 'Astronaut Michael Collins (90), who stayed behind in Apollo 11, passed away',
+        imageDescription: 'The three Apollo 11 astronauts together: Neil Armstrong, Michael Collins, and Buzz Aldrin. While Armstrong and Aldrin entered Eagle to descend toward the lunar dust, Collins stayed behind in lunar orbit aboard the Command Module Columbia to pilot the mothership and bring them safely back home.'
       },
       {
-        heading: 'Why It Had to Stay Behind',
-        text: 'Every single ounce of weight lifted from the Moon required precious fuel. To escape lunar gravity, explosive guillotine bolts severed the connections between the two stages, and the Ascent Stage rocket fired directly off the Descent Stage’s flat roof. The descent stage remained behind as a sturdy launchpad, anchored forever in the lunar soil alongside experiments, tools, and the empty boots of the astronauts.',
-        image: 'https://images-assets.nasa.gov/image/as11-40-5903/as11-40-5903~orig.jpg',
-        caption: 'The golden foil of the descent stage leg gleams against the pitch-black lunar sky behind Aldrin.'
+        sectionId: 2,
+        paragraphs: [
+          'They were heading towards the Moon, carrying the hopes and curiosity of millions of people on Earth. Their spacecraft travelled through space for several days before reaching lunar orbit.',
+          'However, not all three astronauts would land on the Moon. Michael Collins stayed in the Command Module, while Armstrong and Aldrin entered a smaller spacecraft called Eagle.'
+        ],
+        image: '/images/apollo11/eagle-lunar-lander.jpg',
+        imageTopic: "Far above the Earth, NASA's Apollo lunar lander put astronauts on the moon",
+        imageDescription: "Apollo 11 Lunar Module Eagle: Engineered in two specialized stages, this pioneering spacecraft brought Neil Armstrong and Buzz Aldrin safely down to the surface of the Moon."
       },
       {
-        heading: 'A Plaque for All Humankind',
-        text: 'Affixed to the forward landing gear strut between the ladder rungs sits a curved stainless steel plaque. It bears two hemispheres of the Earth, the signatures of Armstrong, Aldrin, Collins, and President Richard Nixon, and words that have outlasted half a century of terrestrial history: "HERE MEN FROM THE PLANET EARTH FIRST SET FOOT UPON THE MOON JULY 1969, A.D. WE CAME IN PEACE FOR ALL MANKIND."',
-        image: 'https://images-assets.nasa.gov/image/as11-40-5899/as11-40-5899~orig.jpg',
-        caption: 'The historic commemorative plaque attached permanently to the ladder strut of the descent stage.'
+        sectionId: 3,
+        paragraphs: [
+          'Eagle had one important job: bring the two astronauts safely down to the lunar surface.',
+          'On 20 July 1969, it successfully landed at a place called Tranquility Base. The message sent to Earth was unforgettable:'
+        ],
+        transmissionQuote: 'Houston, Tranquility Base here. The Eagle has landed.',
+        image: '/images/apollo11/buzz-aldrin-moonwalk.jpg',
+        imageTopic: 'Apollo 11: NASA video of first moon walk resurfaces',
+        imageDescription: 'Buzz Aldrin on the lunar surface at Tranquility Base. Mirrored inside his gold reflective helmet visor are Neil Armstrong, the American flag, and the Lunar Module Eagle resting peacefully in the vacuum of space.'
+      },
+      {
+        sectionId: 4,
+        paragraphs: [
+          'Armstrong and Aldrin stepped onto the Moon, explored the surface and collected samples. Their mission was a success.',
+          'But what happened to the spacecraft that brought them there?',
+          'Eagle was designed in two stages. The lower part, called the Descent Stage, helped the spacecraft land. The upper part, called the Ascent Stage, carried the astronauts back into lunar orbit.',
+          'When the astronauts were ready to leave, the Ascent Stage lifted off, while the Descent Stage stayed behind.'
+        ],
+        image: '/images/apollo11/apollo11-liftoff-pad39a.jpg',
+        imageTopic: 'Apollo 11 liftoff from pad 39A | The Planetary Society',
+        imageDescription: 'The titanic Saturn V liftoff from Launch Complex 39A that launched the Apollo 11 journey from Earth. Days later at Tranquility Base, when the voyage concluded, the Ascent Stage blasted back toward orbit while the Descent Stage remained behind as an eternal launchpad in the lunar soil.'
+      },
+      {
+        sectionId: 5,
+        paragraphs: [
+          'That means a part of the Apollo 11 spacecraft never returned home.',
+          'The astronauts returned safely to Earth on 24 July 1969. But the Descent Stage remained at Tranquility Base, becoming a silent historical object on the lunar surface.',
+          'It no longer carries astronauts. It no longer travels through space. Yet its importance has not disappeared.',
+          'It reminds us that exploration is not only about reaching new places. It is also about the machines, experiments and discoveries that make those journeys possible.'
+        ],
+        closingTribute: 'The astronauts came home. Their footprints remained. And the Eagle left a part of itself behind.'
       }
     ],
 
