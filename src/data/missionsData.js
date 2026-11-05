@@ -198,7 +198,7 @@ export const MISSIONS = [
 
     overview: 'The first astronauts left footprints on the moon, but the next explorers want to leave something more—tracks that would travel far beyond their landing site. That is where the moon buggy came in.',
 
-    storyTitle: 'FOUR WHEELS ACROSS THE MOON',
+    storyTitle: 'THE DUNE BUGGY PARKED FOREVER AT HADLEY RILLE',
 
     story: [
       {
