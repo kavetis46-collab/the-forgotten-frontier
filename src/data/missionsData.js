@@ -39,9 +39,7 @@ export const MISSIONS = [
           'On 16 July 1969, three astronauts — Neil Armstrong, Buzz Aldrin and Michael Collins — began their historic journey aboard the Apollo 11 mission.'
         ],
         image: '/images/apollo11/apollo11-astronauts.jpg',
-        imageTopic: 'Astronaut Michael Collins (90), die in de Apollo 11 achterbleef, overleden',
-        imageTranslation: 'Astronaut Michael Collins (90), who stayed behind in Apollo 11, passed away',
-        imageDescription: 'The three Apollo 11 astronauts together: Neil Armstrong, Michael Collins, and Buzz Aldrin. While Armstrong and Aldrin entered Eagle to descend toward the lunar dust, Collins stayed behind in lunar orbit aboard the Command Module Columbia to pilot the mothership and bring them safely back home.'
+        caption: 'Astronaut Michael Collins (90), who stayed behind in Apollo 11 — Neil Armstrong, Buzz Aldrin and Michael Collins.'
       },
       {
         sectionId: 2,
@@ -50,8 +48,7 @@ export const MISSIONS = [
           'However, not all three astronauts would land on the Moon. Michael Collins stayed in the Command Module, while Armstrong and Aldrin entered a smaller spacecraft called Eagle.'
         ],
         image: '/images/apollo11/eagle-lunar-lander.jpg',
-        imageTopic: "Far above the Earth, NASA's Apollo lunar lander put astronauts on the moon",
-        imageDescription: "Apollo 11 Lunar Module Eagle: Engineered in two specialized stages, this pioneering spacecraft brought Neil Armstrong and Buzz Aldrin safely down to the surface of the Moon."
+        caption: "Far above the Earth, NASA's Apollo lunar lander put astronauts on the moon."
       },
       {
         sectionId: 3,
@@ -61,8 +58,7 @@ export const MISSIONS = [
         ],
         transmissionQuote: 'Houston, Tranquility Base here. The Eagle has landed.',
         image: '/images/apollo11/buzz-aldrin-moonwalk.jpg',
-        imageTopic: 'Apollo 11: NASA video of first moon walk resurfaces',
-        imageDescription: 'Buzz Aldrin on the lunar surface at Tranquility Base. Mirrored inside his gold reflective helmet visor are Neil Armstrong, the American flag, and the Lunar Module Eagle resting peacefully in the vacuum of space.'
+        caption: 'Apollo 11: NASA video of first moon walk resurfaces — Buzz Aldrin on the lunar surface.'
       },
       {
         sectionId: 4,
@@ -80,8 +76,7 @@ export const MISSIONS = [
           'When the astronauts were ready to leave, the Ascent Stage lifted off, while the Descent Stage stayed behind.'
         ],
         image: '/images/apollo11/apollo11-liftoff-pad39a.jpg',
-        imageTopic: 'Apollo 11 liftoff from pad 39A | The Planetary Society',
-        imageDescription: 'The titanic Saturn V liftoff from Launch Complex 39A that launched the Apollo 11 journey from Earth. Days later at Tranquility Base, when the voyage concluded, the Ascent Stage blasted back toward orbit while the Descent Stage remained behind as an eternal launchpad in the lunar soil.'
+        caption: 'Apollo 11 liftoff from pad 39A | The Planetary Society'
       },
       {
         sectionId: 5,

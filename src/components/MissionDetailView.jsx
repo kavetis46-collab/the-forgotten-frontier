@@ -321,86 +321,46 @@ export default function MissionDetailView({
                     </div>
                   )}
 
-                  {/* Embedded Archival Photo Card with Distinct Telemetry Font */}
+                  {/* Clean Archival Photograph with Tagline Directly Below in Separate Font */}
                   {chapter.image && (
-                    <div className="my-8 rounded-2xl bg-gradient-to-br from-slate-900/90 via-slate-950/95 to-slate-900/90 border border-cyan-500/35 p-5 sm:p-7 shadow-2xl backdrop-blur-xl">
-                      {/* Top Header Bar */}
-                      <div className="flex items-center justify-between gap-3 mb-4 border-b border-cyan-500/20 pb-3">
-                        <div className="flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-                          <span className="font-telemetry text-xs uppercase tracking-widest text-cyan-400 font-bold">
-                            ARCHIVAL RECORD // TRANQUILITY BASE ARTIFACT {idx + 1}
-                          </span>
+                    <figure className="my-8 rounded-2xl overflow-hidden border border-cyan-500/30 bg-slate-950/85 shadow-2xl backdrop-blur-xl max-w-3xl">
+                      {/* Clean Photo Container (No description or overlays inside image) */}
+                      <div 
+                        onClick={() => {
+                          spaceAudio.playClick();
+                          setLightboxPhoto({
+                            image: chapter.image,
+                            caption: chapter.caption
+                          });
+                        }}
+                        className="relative group cursor-pointer overflow-hidden bg-black flex items-center justify-center p-2"
+                      >
+                        <img 
+                          src={chapter.image} 
+                          alt={chapter.caption}
+                          className="w-full max-h-[460px] object-contain rounded-xl transition-transform duration-500 group-hover:scale-102"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-xs font-mono text-cyan-300 backdrop-blur-xs rounded-xl">
+                          <ZoomIn className="w-4 h-4" />
+                          <span>Click to Enlarge NASA Photo</span>
                         </div>
-                        <button
-                          onClick={() => {
-                            spaceAudio.playClick();
-                            setLightboxPhoto({
-                              image: chapter.image,
-                              heading: chapter.imageTopic,
-                              caption: chapter.imageDescription
-                            });
-                          }}
-                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-slate-800/80 hover:bg-cyan-500/20 border border-slate-700 hover:border-cyan-500/40 text-[11px] font-mono text-cyan-300 transition-colors cursor-pointer"
-                        >
-                          <ZoomIn className="w-3.5 h-3.5" />
-                          <span>Enlarge NASA Photo</span>
-                        </button>
                       </div>
 
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                        {/* Photo Container */}
-                        <div 
-                          onClick={() => {
-                            spaceAudio.playClick();
-                            setLightboxPhoto({
-                              image: chapter.image,
-                              heading: chapter.imageTopic,
-                              caption: chapter.imageDescription
-                            });
-                          }}
-                          className="lg:col-span-5 relative group cursor-pointer overflow-hidden rounded-xl border border-cyan-500/40 bg-black/90 flex items-center justify-center p-2 shadow-xl hover:border-cyan-400 transition-colors"
-                        >
-                          <img 
-                            src={chapter.image} 
-                            alt={chapter.imageTopic}
-                            className="max-h-72 w-full object-contain rounded-lg transition-transform duration-500 group-hover:scale-105"
-                          />
-                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-xs font-telemetry text-cyan-300 backdrop-blur-xs rounded-lg">
-                            <ZoomIn className="w-4 h-4" />
-                            <span>Click to Enlarge</span>
-                          </div>
-                        </div>
-
-                        {/* Distinct Typography Description Box */}
-                        <div className="lg:col-span-7 space-y-3.5">
-                          {/* Exact Inscription / Heading From Inside Image */}
-                          <div className="p-4 rounded-xl bg-cyan-950/40 border border-cyan-500/30">
-                            <span className="text-[10px] font-telemetry tracking-widest text-cyan-400 uppercase font-bold block mb-1">
-                              ✦ Inscription From Archive Record
+                      {/* Tagline / Description Placed Directly Below Picture in Separate Telemetry Font */}
+                      <figcaption className="p-4 sm:p-5 border-t border-slate-800 bg-gradient-to-r from-slate-950 via-slate-900/80 to-slate-950">
+                        <div className="flex items-start gap-3">
+                          <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0 mt-1 animate-pulse"></span>
+                          <div className="space-y-1">
+                            <span className="text-[10px] font-mono tracking-widest text-cyan-400 uppercase font-bold block">
+                              Photograph Tagline
                             </span>
-                            <h4 className="font-telemetry font-bold text-cyan-200 text-sm sm:text-base leading-snug tracking-wide">
-                              “{chapter.imageTopic}”
-                            </h4>
-                            {chapter.imageTranslation && (
-                              <p className="text-xs text-slate-300 font-mono italic mt-2 border-t border-cyan-500/20 pt-2">
-                                <span className="text-cyan-400 font-semibold">Translation:</span> “{chapter.imageTranslation}”
-                              </p>
-                            )}
-                          </div>
-
-                          {/* Continuing Description in Distinct Archival Font */}
-                          <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
-                            <span className="text-[10px] font-mono tracking-widest text-amber-400 uppercase font-semibold block mb-1">
-                              ◈ Archival Context & Curator Dispatch
-                            </span>
-                            <p className="font-mono text-xs sm:text-sm text-slate-300 leading-relaxed">
-                              {chapter.imageDescription}
+                            <p className="font-telemetry text-sm sm:text-base text-cyan-200 font-medium tracking-wide leading-relaxed">
+                              {chapter.caption}
                             </p>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                      </figcaption>
+                    </figure>
                   )}
 
                   {/* Poetic Concluding Tribute */}
