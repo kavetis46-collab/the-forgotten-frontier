@@ -83,20 +83,25 @@ export default function CosmicBackground({ currentView, targetBody, isWarping })
     const saturnTexture = textureLoader.load('/textures/saturn.jpg');
 
     // ================= LIGHTING =================
-    // Sun position: radiant light source
-    const sunPos = new THREE.Vector3(-38, 0, -22);
-    const sunLight = new THREE.PointLight(0xfff5e6, 3.8, 350, 0.6);
+    // Sun position: cinematic key light from upper-right — illuminates Moon & Mars dramatically
+    const sunPos = new THREE.Vector3(55, 30, 40);
+    const sunLight = new THREE.PointLight(0xfff5d8, 5.5, 650, 0.45);
     sunLight.position.copy(sunPos);
     scene.add(sunLight);
 
-    // Deep space galaxy ambient light
-    const galaxyAmbient = new THREE.AmbientLight(0x1e1538, 0.85);
+    // Deep space galaxy ambient — very dark navy so terminator shadows are strong
+    const galaxyAmbient = new THREE.AmbientLight(0x0d1020, 0.55);
     scene.add(galaxyAmbient);
 
-    // Subtle celestial fill
-    const fillLight = new THREE.DirectionalLight(0x38bdf8, 0.9);
-    fillLight.position.set(20, 15, 30);
+    // Subtle cool-blue rim fill from opposite side (adds scientific depth)
+    const fillLight = new THREE.DirectionalLight(0x1e40af, 0.45);
+    fillLight.position.set(-30, 5, 20);
     scene.add(fillLight);
+
+    // Faint purple nebula scatter to add mystery
+    const nebulaLight = new THREE.PointLight(0x7c3aed, 0.6, 200);
+    nebulaLight.position.set(0, 20, -30);
+    scene.add(nebulaLight);
 
     // ================= 1. REALISTIC SHINING STARS (NO DOTS!) =================
     const starTexture = createRealisticStarTexture();
@@ -189,11 +194,9 @@ export default function CosmicBackground({ currentView, targetBody, isWarping })
     const solarSystemGroup = new THREE.Group();
     scene.add(solarSystemGroup);
 
-    // --- A. THE REAL SUN ---
+    // --- A. THE REAL SUN (positioned far off-camera as pure light source for hero) ---
     const sunGeo = new THREE.SphereGeometry(9.5, 64, 64);
-    const sunMat = new THREE.MeshBasicMaterial({
-      map: sunTexture
-    });
+    const sunMat = new THREE.MeshBasicMaterial({ map: sunTexture });
     const sunMesh = new THREE.Mesh(sunGeo, sunMat);
     sunMesh.position.copy(sunPos);
     solarSystemGroup.add(sunMesh);
@@ -201,106 +204,100 @@ export default function CosmicBackground({ currentView, targetBody, isWarping })
     // Solar Corona Atmosphere Glow
     const coronaGeo = new THREE.SphereGeometry(11.8, 32, 32);
     const coronaMat = new THREE.MeshBasicMaterial({
-      color: 0xf59e0b,
-      transparent: true,
-      opacity: 0.32,
-      side: THREE.BackSide,
-      blending: THREE.AdditiveBlending
+      color: 0xf59e0b, transparent: true, opacity: 0.32,
+      side: THREE.BackSide, blending: THREE.AdditiveBlending
     });
     sunMesh.add(new THREE.Mesh(coronaGeo, coronaMat));
 
-    // --- B. THE REAL EARTH (Blue Marble Texture + Atmosphere Layer) ---
-    const earthGeo = new THREE.SphereGeometry(4.2, 64, 64);
+    // =========================================================
+    // HERO COMPOSITION: Moon LEFT (large) · Earth CENTRE-BACK
+    // (tiny/distant) · Mars RIGHT (large) — cinematic tableau
+    // =========================================================
+
+    // --- B. EARTH — tiny, distant, centred in the deep background ---
+    const earthGeo = new THREE.SphereGeometry(1.1, 64, 64);
     const earthMat = new THREE.MeshStandardMaterial({
-      map: earthTexture,
-      roughness: 0.55,
-      metalness: 0.12
+      map: earthTexture, roughness: 0.5, metalness: 0.14
     });
     const earthMesh = new THREE.Mesh(earthGeo, earthMat);
-    earthMesh.position.set(-11, 2.5, -4);
-    earthMesh.rotation.y = 0.6;
+    // Dead centre of frame, pushed very far back so it reads as "distant"
+    earthMesh.position.set(0.4, 0.5, -18);
+    earthMesh.rotation.y = -0.4;
     solarSystemGroup.add(earthMesh);
 
-    // Rayleigh Scattering Atmosphere Halo
-    const earthAtmoGeo = new THREE.SphereGeometry(4.45, 48, 48);
+    // Thin blue Rayleigh atmosphere glow around distant Earth
+    const earthAtmoGeo = new THREE.SphereGeometry(1.22, 48, 48);
     const earthAtmoMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
-      transparent: true,
-      opacity: 0.25,
-      side: THREE.BackSide,
-      blending: THREE.AdditiveBlending
+      color: 0x38bdf8, transparent: true, opacity: 0.28,
+      side: THREE.BackSide, blending: THREE.AdditiveBlending
     });
     earthMesh.add(new THREE.Mesh(earthAtmoGeo, earthAtmoMat));
 
-    // --- C. THE REAL MOON (NASA LRO Texture) ---
-    const moonGeo = new THREE.SphereGeometry(1.6, 64, 64);
+    // --- C. MOON — large, left side of frame, partially off-screen for drama ---
+    const moonGeo = new THREE.SphereGeometry(7.8, 128, 128);
     const moonMat = new THREE.MeshStandardMaterial({
-      map: moonTexture,
-      roughness: 0.88,
-      metalness: 0.05
+      map: moonTexture, roughness: 0.92, metalness: 0.03
     });
     const moonMesh = new THREE.Mesh(moonGeo, moonMat);
-    moonMesh.position.set(-2, 1.2, 4);
+    // Left side — large. x=-14 pushes it left, z=2 brings it close so it feels massive
+    moonMesh.position.set(-14, -2.5, 2);
+    moonMesh.rotation.y = 0.35;
     solarSystemGroup.add(moonMesh);
 
-    // --- D. THE REAL MARS (NASA Viking/MGS Texture) ---
-    const marsGeo = new THREE.SphereGeometry(2.4, 64, 64);
+    // Subtle limb-lighting rim glow (backlit edge from the right to suggest sun)
+    const moonRimGeo = new THREE.SphereGeometry(8.1, 64, 64);
+    const moonRimMat = new THREE.MeshBasicMaterial({
+      color: 0xc0d8f0, transparent: true, opacity: 0.09,
+      side: THREE.BackSide, blending: THREE.AdditiveBlending
+    });
+    moonMesh.add(new THREE.Mesh(moonRimGeo, moonRimMat));
+
+    // --- D. MARS — large, right side, slightly smaller than Moon for depth ---
+    const marsGeo = new THREE.SphereGeometry(5.6, 128, 128);
     const marsMat = new THREE.MeshStandardMaterial({
-      map: marsTexture,
-      roughness: 0.72,
-      metalness: 0.1
+      map: marsTexture, roughness: 0.76, metalness: 0.08
     });
     const marsMesh = new THREE.Mesh(marsGeo, marsMat);
-    marsMesh.position.set(11, -1.5, -2);
+    // Right side — large. z=-2 pushes it slightly further back than Moon
+    marsMesh.position.set(14, -1.5, -2);
+    marsMesh.rotation.y = -0.5;
     solarSystemGroup.add(marsMesh);
 
-    // Mars Atmosphere Haze
-    const marsAtmoGeo = new THREE.SphereGeometry(2.55, 32, 32);
+    // Warm orange-red atmospheric haze
+    const marsAtmoGeo = new THREE.SphereGeometry(5.9, 64, 64);
     const marsAtmoMat = new THREE.MeshBasicMaterial({
-      color: 0xf97316,
-      transparent: true,
-      opacity: 0.24,
-      side: THREE.BackSide,
-      blending: THREE.AdditiveBlending
+      color: 0xf97316, transparent: true, opacity: 0.18,
+      side: THREE.BackSide, blending: THREE.AdditiveBlending
     });
     marsMesh.add(new THREE.Mesh(marsAtmoGeo, marsAtmoMat));
 
-    // --- E. THE REAL JUPITER (Cassini Texture) ---
+    // --- E. JUPITER — far background, barely visible, adds depth ---
     const jupiterGeo = new THREE.SphereGeometry(6.4, 64, 64);
-    const jupiterMat = new THREE.MeshStandardMaterial({
-      map: jupiterTexture,
-      roughness: 0.65
-    });
+    const jupiterMat = new THREE.MeshStandardMaterial({ map: jupiterTexture, roughness: 0.65 });
     const jupiterMesh = new THREE.Mesh(jupiterGeo, jupiterMat);
-    jupiterMesh.position.set(38, -3.5, -35);
+    jupiterMesh.position.set(38, -3.5, -65);
     solarSystemGroup.add(jupiterMesh);
 
-    // --- F. THE REAL SATURN WITH RINGS (Cassini Texture) ---
+    // --- F. SATURN (rings) — very distant, adds solar-system context ---
     const saturnGeo = new THREE.SphereGeometry(4.8, 64, 64);
-    const saturnMat = new THREE.MeshStandardMaterial({
-      map: saturnTexture,
-      roughness: 0.6
-    });
+    const saturnMat = new THREE.MeshStandardMaterial({ map: saturnTexture, roughness: 0.6 });
     const saturnMesh = new THREE.Mesh(saturnGeo, saturnMat);
-    saturnMesh.position.set(70, -6.0, -60);
+    saturnMesh.position.set(70, -6.0, -100);
     solarSystemGroup.add(saturnMesh);
 
-    // Saturn Ring System
     const ringGeo = new THREE.RingGeometry(6.2, 12.5, 64);
     const ringMat = new THREE.MeshStandardMaterial({
-      color: 0xfef08a,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.82,
-      roughness: 0.4
+      color: 0xfef08a, side: THREE.DoubleSide,
+      transparent: true, opacity: 0.72, roughness: 0.4
     });
     const saturnRings = new THREE.Mesh(ringGeo, ringMat);
     saturnRings.rotation.x = Math.PI / 2.3;
     saturnRings.rotation.y = 0.2;
     saturnMesh.add(saturnRings);
 
-    // ================= 3. ELEGANT CELESTIAL ORBIT TRACKS =================
-    const orbitRadii = [33, 49, 76, 110];
+    // ================= 3. SUBTLE ORBITAL DEPTH LINES (very faint) =================
+    // Only two rings, very low opacity — not distracting in hero view
+    const orbitRadii = [22, 38];
     orbitRadii.forEach((r, idx) => {
       const curve = new THREE.EllipseCurve(-38, -22, r, r * 0.92, 0, Math.PI * 2, false, 0);
       const pts = curve.getPoints(90);
@@ -309,10 +306,7 @@ export default function CosmicBackground({ currentView, targetBody, isWarping })
       );
       const orbMat = new THREE.LineDashedMaterial({
         color: idx % 2 === 0 ? 0x38bdf8 : 0xa855f7,
-        dashSize: 2.0,
-        gapSize: 1.5,
-        opacity: 0.18,
-        transparent: true
+        dashSize: 2.0, gapSize: 2.5, opacity: 0.09, transparent: true
       });
       const orbLine = new THREE.Line(orbGeo, orbMat);
       orbLine.computeLineDistances();
@@ -344,8 +338,8 @@ export default function CosmicBackground({ currentView, targetBody, isWarping })
     satGroup.add(leftPanel);
     satGroup.add(rightPanel);
 
-    satGroup.position.set(1.5, 3.8, 12);
-    satGroup.scale.set(0.65, 0.65, 0.65);
+    satGroup.position.set(-3.5, 2.8, 8);
+    satGroup.scale.set(0.55, 0.55, 0.55);
     scene.add(satGroup);
 
     // ================= 5. MOUSE PARALLAX & SMOOTH SCROLL =================
@@ -385,10 +379,14 @@ export default function CosmicBackground({ currentView, targetBody, isWarping })
       // Realistic slow axial planetary rotations
       sunMesh.rotation.y += 0.03 * delta;
       earthMesh.rotation.y += 0.07 * delta;
-      moonMesh.rotation.y += 0.04 * delta;
-      marsMesh.rotation.y += 0.06 * delta;
+      moonMesh.rotation.y += 0.018 * delta;  // Moon rotates very slowly (tidally locked)
+      marsMesh.rotation.y += 0.022 * delta;  // Mars day ~24.6h
       jupiterMesh.rotation.y += 0.10 * delta;
       saturnMesh.rotation.y += 0.09 * delta;
+
+      // Gentle cinematic breathing — Moon and Mars float very slowly in space
+      moonMesh.position.y = -2.5 + Math.sin(elapsed * 0.18) * 0.22;
+      marsMesh.position.y = -1.5 + Math.sin(elapsed * 0.14 + 1.2) * 0.18;
 
       // Realistic shining star twinkle (subtle pulsing luminosity)
       const twinkle = 0.85 + Math.sin(elapsed * 2.2) * 0.12;
@@ -475,34 +473,35 @@ export default function CosmicBackground({ currentView, targetBody, isWarping })
     }
 
     switch (currentView) {
-      case 'hero': // Page 1: Space Opening
-        state.targetCameraPos.set(0, 2, 27);
-        state.cameraTarget.set(0, 0, 0);
+      case 'hero': // Page 1 — cinematic tableau: Moon LEFT, Earth CENTRE-BACK, Mars RIGHT
+        // Pull back enough to show both flanking planets; slight downward angle for grandeur
+        state.targetCameraPos.set(0, 1.5, 24);
+        state.cameraTarget.set(0, -0.5, 0);
         break;
 
-      case 'intro': // Page 2: Prologue
-        state.targetCameraPos.set(-2, 3, 22);
-        state.cameraTarget.set(-2, 1, 0);
+      case 'intro': // Page 2: Prologue — slight pull-back revealing both worlds
+        state.targetCameraPos.set(-1, 2, 20);
+        state.cameraTarget.set(0, -0.5, 0);
         break;
 
-      case 'destination': // Page 3: Moon & Mars Hub
-        state.targetCameraPos.set(0, 1.0, 19);
-        state.cameraTarget.set(0, 0, 0);
+      case 'destination': // Page 3: Moon & Mars Hub — centred between both
+        state.targetCameraPos.set(0, 0.5, 18);
+        state.cameraTarget.set(0, -0.5, 0);
         break;
 
-      case 'mission': // Page 4 & 5: Detailed Mission
+      case 'mission': // Page 4 & 5: Detailed Mission — zoom towards the specific body
         if (targetBody === 'moon') {
-          state.targetCameraPos.set(-1.2, 1.2, 10);
-          state.cameraTarget.set(-2, 1.2, 4);
+          state.targetCameraPos.set(-10, 0.5, 14);
+          state.cameraTarget.set(-14, -2.5, 2);
         } else {
-          state.targetCameraPos.set(9.5, -1.0, 7.5);
-          state.cameraTarget.set(11, -1.5, -2);
+          state.targetCameraPos.set(10, 0.5, 8);
+          state.cameraTarget.set(14, -1.5, -2);
         }
         break;
 
-      case 'learn': // Page 6: What Did We Learn?
+      case 'learn': // Page 6: What Did We Learn? — wide cosmic pull-back
         state.targetCameraPos.set(0, 8, 38);
-        state.cameraTarget.set(0, 0, -10);
+        state.cameraTarget.set(0, -2, -10);
         break;
 
       default:
