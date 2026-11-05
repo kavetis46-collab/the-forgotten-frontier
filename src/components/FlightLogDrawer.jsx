@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Award, CheckCircle, ArrowRight, Compass, Rocket, Shield } from 'lucide-react';
+import { X, Award, CheckCircle, ArrowRight, Compass, Shield } from 'lucide-react';
 import { spaceAudio } from '../utils/audio';
 
 export default function FlightLogDrawer({
@@ -114,7 +114,7 @@ export default function FlightLogDrawer({
             className="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold font-mono text-xs flex items-center justify-center gap-2 transition-all shadow"
           >
             <span>VIEW WHAT WE LEARNED</span>
-            <Rocket className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>

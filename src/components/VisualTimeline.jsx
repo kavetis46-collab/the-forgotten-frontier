@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Rocket, Target, Activity, Flag, Clock, CheckCircle, ChevronRight } from 'lucide-react';
+import { Send, Target, Activity, Flag, Clock, CheckCircle, ChevronRight } from 'lucide-react';
 import { spaceAudio } from '../utils/audio';
 
 export default function VisualTimeline({ timeline, accentColor, body }) {
   const [activeStep, setActiveStep] = useState(0);
 
   const getStepIcon = (index, total) => {
-    if (index === 0) return <Rocket className="w-4 h-4" />;
+    if (index === 0) return <Send className="w-4 h-4" />;
     if (index === 1) return <Target className="w-4 h-4" />;
     if (index === 2) return <Activity className="w-4 h-4" />;
     if (index === total - 2) return <Flag className="w-4 h-4" />;

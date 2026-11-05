@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Compass, Sparkles, ChevronRight, ChevronLeft, Rocket, Eye } from 'lucide-react';
+import { Compass, Sparkles, ChevronRight, ChevronLeft, Eye } from 'lucide-react';
 import { spaceAudio } from '../utils/audio';
 
 const ORBITAL_WAYPOINTS = [
@@ -11,7 +11,7 @@ const ORBITAL_WAYPOINTS = [
   { label: 'Full Galaxy View', au: '25,000 LY', depth: 1.0, icon: '🌌' }
 ];
 
-export default function SolarSystemScrollHUD({ onTriggerRocket }) {
+export default function SolarSystemScrollHUD() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isCollapsed, setIsCollapsed] = useState(false);
 

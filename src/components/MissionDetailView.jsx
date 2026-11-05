@@ -13,8 +13,7 @@ import {
   Lightbulb, 
   HelpCircle,
   ExternalLink,
-  ChevronDown,
-  Rocket
+  ChevronDown
 } from 'lucide-react';
 import VisualTimeline from './VisualTimeline';
 import InteractiveSurfaceMap from './InteractiveSurfaceMap';
@@ -451,7 +450,7 @@ export default function MissionDetailView({
                   {nextButtonLabel}
                 </span>
               </div>
-              <Rocket className="w-5 h-5 text-cyan-400 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-5 h-5 text-cyan-400 group-hover:translate-x-1 transition-transform" />
             </button>
           )}
         </div>

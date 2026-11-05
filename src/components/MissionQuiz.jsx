@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { Award, CheckCircle2, XCircle, RotateCcw, Sparkles, HelpCircle, ArrowRight, Rocket } from 'lucide-react';
+import { Award, CheckCircle2, XCircle, RotateCcw, Sparkles, HelpCircle, ArrowRight, Compass } from 'lucide-react';
 import { spaceAudio } from '../utils/audio';
 
 export default function MissionQuiz({ 
@@ -200,7 +200,7 @@ export default function MissionQuiz({
               {isCorrect && countdown !== null && (
                 <div className="mt-4 pt-3 border-t border-emerald-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-2 text-xs font-mono text-emerald-300">
-                    <Rocket className="w-4 h-4 text-cyan-400 animate-pulse" />
+                    <Compass className="w-4 h-4 text-cyan-400 animate-spin" style={{ animationDuration: '8s' }} />
                     <span>
                       Advancing to <strong className="text-white">{nextTargetName || 'Next Mission'}</strong> in <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-200 font-bold">{countdown}s</span>...
                     </span>
@@ -210,7 +210,7 @@ export default function MissionQuiz({
                     onClick={handleManualAdvance}
                     className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs transition-all shadow-lg shadow-emerald-500/20 shrink-0"
                   >
-                    <span>Launch Now</span>
+                    <span>Proceed Now</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>

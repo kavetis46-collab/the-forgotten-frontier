@@ -1,5 +1,5 @@
 import React from 'react';
-import { Rocket, Sparkles, ArrowRight, Compass, Shield, Globe } from 'lucide-react';
+import { Sparkles, ArrowRight, Compass, Shield, Globe } from 'lucide-react';
 import { spaceAudio } from '../utils/audio';
 
 export default function IntroView({ onStartJourney, onBackToOpening }) {
@@ -67,7 +67,7 @@ export default function IntroView({ onStartJourney, onBackToOpening }) {
             className="w-full sm:w-auto px-10 py-5 rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black font-mono tracking-wider text-base sm:text-lg flex items-center justify-center gap-3 shadow-xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all group"
           >
             <span>BEGIN THE JOURNEY</span>
-            <Rocket className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
 
           <button

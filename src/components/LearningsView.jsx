@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   Atom, 
   ShieldCheck, 
-  Rocket, 
+  Flame, 
   Award, 
   RotateCcw, 
   Download, 
@@ -28,7 +28,7 @@ export default function LearningsView({
     switch (iconName) {
       case 'Atom': return <Atom className="w-5 h-5 text-cyan-400" />;
       case 'ShieldCheck': return <ShieldCheck className="w-5 h-5 text-emerald-400" />;
-      case 'Rocket': return <Rocket className="w-5 h-5 text-orange-400" />;
+      case 'Rocket': return <Flame className="w-5 h-5 text-orange-400" />;
       default: return <Sparkles className="w-5 h-5 text-cyan-400" />;
     }
   };

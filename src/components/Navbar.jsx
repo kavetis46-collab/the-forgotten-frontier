@@ -10,8 +10,7 @@ import {
   X, 
   ChevronDown, 
   Sparkles,
-  Radio,
-  Rocket
+  Radio
 } from 'lucide-react';
 import { spaceAudio } from '../utils/audio';
 
@@ -23,8 +22,7 @@ export default function Navbar({
   isAudioMuted,
   onToggleAudio,
   onNavigate,
-  onOpenFlightLog,
-  onTriggerRocket
+  onOpenFlightLog
 }) {
   const [missionDropdownOpen, setMissionDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -171,21 +169,9 @@ export default function Navbar({
           </button>
         </div>
 
-        {/* Action Tool Buttons (Rocket Launcher, Audio, Flight Log, Fullscreen) */}
+        {/* Action Tool Buttons (Audio, Flight Log, Fullscreen) */}
         <div className="flex items-center gap-2">
           
-          {/* Quick Manual Rocket Flyby Button */}
-          {onTriggerRocket && (
-            <button
-              onClick={onTriggerRocket}
-              className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-orange-500/20 to-amber-500/10 border border-orange-500/40 text-orange-300 hover:text-orange-200 hover:border-orange-400 text-xs font-mono transition-all group"
-              title="Trigger Cinematic Rocket Flyby"
-            >
-              <Rocket className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              <span>Launch Rocket</span>
-            </button>
-          )}
-
           {/* Space Audio Synthesizer Toggle */}
           <button
             onClick={onToggleAudio}
@@ -304,18 +290,6 @@ export default function Navbar({
           >
             5. What Did We Learn?
           </button>
-          {onTriggerRocket && (
-            <button
-              onClick={() => {
-                onTriggerRocket();
-                setMobileMenuOpen(false);
-              }}
-              className="w-full text-left p-2 mt-2 rounded text-xs font-mono text-amber-300 hover:bg-amber-950/30 flex items-center gap-2 border border-amber-500/30"
-            >
-              <Rocket className="w-4 h-4 text-amber-400" />
-              <span>Launch Rocket Flyby</span>
-            </button>
-          )}
         </div>
       )}
     </nav>

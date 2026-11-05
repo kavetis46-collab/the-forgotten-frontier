@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import CosmicBackground from './components/CosmicBackground';
 import Navbar from './components/Navbar';
 import OpeningView from './components/OpeningView';
@@ -7,7 +7,6 @@ import DestinationView from './components/DestinationView';
 import MissionDetailView from './components/MissionDetailView';
 import LearningsView from './components/LearningsView';
 import FlightLogDrawer from './components/FlightLogDrawer';
-import RocketFlybyTransition from './components/RocketFlybyTransition';
 import SolarSystemScrollHUD from './components/SolarSystemScrollHUD';
 import { MISSIONS } from './data/missionsData';
 import { spaceAudio } from './utils/audio';
@@ -17,8 +16,6 @@ export default function App() {
   const [activeNavSection, setActiveNavSection] = useState('hero'); // 'hero' | 'intro' | 'destination' | 'learn'
   const [currentMissionId, setCurrentMissionId] = useState('apollo-11-descent-stage');
   const [isWarping, setIsWarping] = useState(false);
-  const [isRocketLaunching, setIsRocketLaunching] = useState(false);
-  const [targetLabel, setTargetLabel] = useState('');
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const [isAudioMuted, setIsAudioMuted] = useState(true);
@@ -31,17 +28,6 @@ export default function App() {
       return [];
     }
   });
-
-  const rocketTimerRef = useRef(null);
-
-  // Trigger rocket launch on initial entrance (welcoming the user into space)
-  useEffect(() => {
-    const entryTimer = setTimeout(() => {
-      triggerRocketAnimation('SYSTEM LAUNCH: ENTERING THE FORGOTTEN FRONTIER');
-    }, 400);
-
-    return () => clearTimeout(entryTimer);
-  }, []);
 
   // Track scroll percentage and current visible section for smooth navigation & HUD
   useEffect(() => {
@@ -77,26 +63,8 @@ export default function App() {
   const activeMission = MISSIONS.find(m => m.id === currentMissionId) || MISSIONS[0];
   const targetBody = currentView === 'mission' ? activeMission.body : (activeNavSection === 'destination' ? 'both' : (activeNavSection === 'intro' ? 'moon' : 'hero'));
 
-  // Trigger realistic rocket launch animation helper
-  const triggerRocketAnimation = (label = '') => {
-    if (rocketTimerRef.current) {
-      clearTimeout(rocketTimerRef.current);
-    }
-
-    setTargetLabel(label || 'ORBITAL TRAJECTORY INSERTION');
-    setIsRocketLaunching(true);
-    setIsWarping(true);
-
-    spaceAudio.playRocketFlyby();
-
-    rocketTimerRef.current = setTimeout(() => {
-      setIsRocketLaunching(false);
-      setIsWarping(false);
-    }, 1350);
-  };
-
   // Universal Navigation Handler with Smooth Scroll & Instant Section Jumping
-  const handleNavigate = (view, missionId = null, label = '') => {
+  const handleNavigate = (view, missionId = null) => {
     if (missionId) {
       setCurrentMissionId(missionId);
     }
@@ -123,37 +91,17 @@ export default function App() {
       }
       setActiveNavSection(view);
     }
-
-    // Determine descriptive telemetry label
-    let displayLabel = label;
-    if (!displayLabel) {
-      if (view === 'hero') displayLabel = 'TRAJECTORY: ORBITAL PANORAMA';
-      else if (view === 'intro') displayLabel = 'TRAJECTORY: PROLOGUE ARCHIVE';
-      else if (view === 'destination') displayLabel = 'TRAJECTORY: DESTINATION MATRIX';
-      else if (view === 'mission') {
-        const targetM = MISSIONS.find(m => m.id === (missionId || currentMissionId));
-        displayLabel = `TRAJECTORY: ${targetM ? targetM.artifact.toUpperCase() : 'MISSION'}`;
-      } else if (view === 'learn') displayLabel = 'TRAJECTORY: SYNTHESIS & REFLECTION';
-    }
-
-    // Fire the rocket launch transition
-    triggerRocketAnimation(displayLabel);
   };
 
   // Begin journey from Page 2
   const handleStartJourney = () => {
-    handleNavigate('destination', null, 'ASCENT TRAJECTORY: LUNAR & MARTIAN DESTINATIONS');
+    handleNavigate('destination');
   };
 
   // Audio Toggle
   const handleToggleAudio = () => {
     const isUnmuted = spaceAudio.toggleMute();
     setIsAudioMuted(!isUnmuted);
-  };
-
-  // Manual Rocket Button
-  const handleTriggerManualRocket = () => {
-    triggerRocketAnimation('MANUAL TELEMETRY: ASCENDING RECONNAISSANCE FLYBY');
   };
 
   // Handle Quiz completion badge persistence
@@ -221,7 +169,7 @@ export default function App() {
   };
 
   return (
-    <div className={`relative min-h-screen bg-[#02040a] text-slate-100 selection:bg-cyan-500 selection:text-black overflow-x-hidden font-sans ${isRocketLaunching ? 'screen-rumble' : ''}`}>
+    <div className="relative min-h-screen bg-[#02040a] text-slate-100 selection:bg-cyan-500 selection:text-black overflow-x-hidden font-sans">
       
       {/* Three.js Interactive 3D Cosmic Background (Real NASA Textures + Shining Twinkling Stars) */}
       <CosmicBackground 
@@ -241,14 +189,8 @@ export default function App() {
         />
       </div>
 
-      {/* Photorealistic Orbital Aerospace Rocket Ascent Transition (Ascending 33° Graph Vector) */}
-      <RocketFlybyTransition
-        isActive={isRocketLaunching}
-        targetLabel={targetLabel}
-      />
-
       {/* Interactive Solar System Scroll HUD Mini-Map Radar (Desktop & Tablet) */}
-      <SolarSystemScrollHUD onTriggerRocket={handleTriggerManualRocket} />
+      <SolarSystemScrollHUD />
 
       {/* Navigation Bar */}
       <Navbar
@@ -260,7 +202,6 @@ export default function App() {
         onToggleAudio={handleToggleAudio}
         onNavigate={handleNavigate}
         onOpenFlightLog={() => setFlightLogOpen(true)}
-        onTriggerRocket={handleTriggerManualRocket}
       />
 
       {/* Main Dynamic View Controller */}
