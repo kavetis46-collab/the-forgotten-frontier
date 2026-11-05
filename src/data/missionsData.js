@@ -197,7 +197,7 @@ export const MISSIONS = [
     accentColor: '#38bdf8',
     status: 'Permanent Historic Vehicle',
 
-    overview: 'Before Apollo 15, astronauts explored the Moon entirely on foot, tethered to a few hundred meters from their ship. On July 31, 1971, Dave Scott and Jim Irwin unfolded the world’s first extraterrestrial automobile: an open-air electric buggy that drove 27.8 kilometers across towering lunar mountains and deep volcanic canyons.',
+    overview: 'The first astronauts left footprints on the moon, but the next explorers want to leave something more—tracks that would travel far beyond their landing site. That is where the moon buggy came in.',
 
     story: [
       {
