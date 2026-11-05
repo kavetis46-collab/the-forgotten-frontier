@@ -1,45 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import React from 'react';
+import { ArrowRight } from 'lucide-react';
 import { spaceAudio } from '../utils/audio';
 
 /* ============================================================
    HERO OPENING VIEW — Cinematic Extraterrestrial Experience
    - Real 3D Three.js cosmos in background (Moon left, Mars right, Earth distant)
-   - Same lunar surface peak along the bottom with smooth parallax
+   - Lunar surface peak along the bottom
    - Animated orbital ellipse flight path around title with orbiting spacecraft
    - Clean, powerful typography and poignant narrative quote
-   - Smooth scroll animation and interactive exploration
+   - Direct entry into the cosmos upon clicking the CTA button
    ============================================================ */
 
 export default function OpeningView({ onBegin }) {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Parallax offsets as user scrolls down from hero
-  const peakParallax = Math.min(scrollY * 0.42, 220);
-  const contentFade = Math.max(1 - scrollY / 520, 0);
-  const contentLift = -Math.min(scrollY * 0.28, 120);
-
-  const handleScrollDown = () => {
-    spaceAudio.playClick();
-    const target = document.getElementById('intro') || document.getElementById('destination');
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    } else if (onBegin) {
-      onBegin();
-    }
-  };
-
   return (
-    <div className="relative min-h-screen flex flex-col justify-between p-6 sm:p-12 select-none pointer-events-auto overflow-hidden">
+    <div className="relative h-screen min-h-[620px] max-h-screen flex flex-col justify-between p-6 sm:p-12 select-none pointer-events-auto overflow-hidden">
       
       {/* ── CSS KEYFRAMES ────────────────────────────────────────── */}
       <style>{`
@@ -67,14 +41,7 @@ export default function OpeningView({ onBegin }) {
       `}</style>
 
       {/* ── 1. ANIMATED ORBITAL FLIGHT RING AROUND THE TITLE ─────── */}
-      <div
-        className="absolute inset-0 pointer-events-none flex items-center justify-center z-10"
-        style={{
-          transform: `translateY(${contentLift * 0.5}px)`,
-          opacity: contentFade,
-          transition: 'opacity 0.1s ease-out'
-        }}
-      >
+      <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-10">
         <svg
           viewBox="0 0 1000 360"
           className="w-[92%] max-w-[920px] h-auto overflow-visible"
@@ -196,15 +163,7 @@ export default function OpeningView({ onBegin }) {
       </div>
 
       {/* ── 2. THE LUNAR PEAK TERRAIN (ALONG THE BOTTOM) ─────────── */}
-      {/* Sinks down with smooth parallax as viewer scrolls into space */}
-      <div
-        className="absolute bottom-0 left-0 right-0 pointer-events-none z-20"
-        style={{
-          transform: `translateY(${peakParallax}px)`,
-          opacity: Math.max(1 - scrollY / 700, 0),
-          transition: 'transform 0.08s ease-out, opacity 0.12s ease-out'
-        }}
-      >
+      <div className="absolute bottom-0 left-0 right-0 pointer-events-none z-20">
         {/* Rocky lunar surface terrain texture with crater ridge mask */}
         <div
           className="w-full h-[28vh] sm:h-[34vh]"
@@ -234,7 +193,6 @@ export default function OpeningView({ onBegin }) {
       <div
         className="relative flex items-center justify-between text-xs font-mono text-slate-400 z-30"
         style={{
-          opacity: contentFade,
           animation: 'heroFadeIn 0.9s ease-out 0.2s both'
         }}
       >
@@ -252,14 +210,7 @@ export default function OpeningView({ onBegin }) {
       </div>
 
       {/* ── 4. CENTRE HERO TITLE & NARRATIVE CARD ─────────────────── */}
-      <div
-        className="relative w-full max-w-4xl mx-auto my-auto text-center py-6 sm:py-10 z-30 pointer-events-auto"
-        style={{
-          transform: `translateY(${contentLift}px)`,
-          opacity: contentFade,
-          transition: 'transform 0.08s ease-out, opacity 0.1s ease-out'
-        }}
-      >
+      <div className="relative w-full max-w-4xl mx-auto my-auto text-center py-6 sm:py-10 z-30 pointer-events-auto">
         {/* Main Title */}
         <h1
           className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-cinematic text-white tracking-tight leading-none mb-6 sm:mb-8"
@@ -301,11 +252,10 @@ export default function OpeningView({ onBegin }) {
         </div>
       </div>
 
-      {/* ── 5. BOTTOM HUD BAR WITH SCROLL INVITATION ─────────────── */}
+      {/* ── 5. BOTTOM HUD BAR ────────────────────────────────────── */}
       <div
         className="relative flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-slate-500 border-t border-slate-800/80 pt-4 gap-3 z-30"
         style={{
-          opacity: contentFade,
           animation: 'heroFadeIn 1s ease-out 1.1s both'
         }}
       >
@@ -313,16 +263,11 @@ export default function OpeningView({ onBegin }) {
           <span>COORDINATES: LUNAR REGOLITH &amp; MARTIAN CRATERS</span>
         </div>
 
-        {/* Animated Smooth Scroll Indicator */}
-        <button
-          onClick={handleScrollDown}
-          className="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-cyan-500/30 text-cyan-400 hover:text-cyan-300 transition-all cursor-pointer group"
-          style={{ animation: 'scrollBounce 2.4s ease-in-out infinite' }}
-          title="Scroll down to explore the Solar System"
-        >
-          <span className="text-[10px] tracking-widest font-bold uppercase">SCROLL TO EXPLORE</span>
-          <ChevronDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
-        </button>
+        {/* Telemetric Instruction Badge */}
+        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] tracking-widest font-bold">
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+          <span>CLICK "ENTER THE COSMOS" TO BEGIN</span>
+        </div>
 
         <div className="hidden sm:flex items-center gap-4">
           <span>6 FEATURED ARTIFACTS</span>

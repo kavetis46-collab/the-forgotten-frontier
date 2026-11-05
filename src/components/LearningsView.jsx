@@ -10,7 +10,8 @@ import {
   Compass, 
   Globe2, 
   Share2, 
-  Heart 
+  Heart,
+  ArrowLeft
 } from 'lucide-react';
 import { LEARNING_PILLARS, FINAL_MESSAGE } from '../data/learningsData';
 import { spaceAudio } from '../utils/audio';
@@ -19,6 +20,7 @@ export default function LearningsView({
   unlockedBadges,
   totalMissions,
   onRestartJourney,
+  onBackToDestinations,
   onSelectMission
 }) {
   const [activePillar, setActivePillar] = useState('discoveries');
@@ -232,27 +234,32 @@ export default function LearningsView({
         </div>
       </div>
 
-      {/* Restart / Re-explore Call to Action */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
+      {/* Page Navigation & Restart Journey Call to Action */}
+      <div className="mt-8 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto">
+        <button
+          onClick={() => {
+            spaceAudio.playClick();
+            if (onBackToDestinations) onBackToDestinations();
+          }}
+          className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white font-mono text-xs transition-all cursor-pointer"
+        >
+          <ArrowLeft className="w-4 h-4 text-slate-400" />
+          <span>← RETURN TO DESTINATIONS (MOON &amp; MARS)</span>
+        </button>
+
+        <span className="text-[11px] uppercase tracking-widest text-slate-500 font-mono hidden sm:block">
+          PAGE 4 OF 5 • SCIENTIFIC LEGACY
+        </span>
+
         <button
           onClick={() => {
             spaceAudio.playWarp();
             onRestartJourney();
           }}
-          className="w-full sm:w-auto px-8 py-4 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold font-mono tracking-wider text-sm flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 transition-all"
+          className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-bold font-mono tracking-wider text-xs shadow-lg shadow-cyan-500/25 transition-all cursor-pointer"
         >
           <RotateCcw className="w-4 h-4" />
-          <span>RESTART EXPEDITION JOURNEY</span>
-        </button>
-
-        <button
-          onClick={() => {
-            spaceAudio.playClick();
-            onSelectMission('apollo-11-descent-stage');
-          }}
-          className="w-full sm:w-auto px-6 py-4 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-mono text-xs transition-colors"
-        >
-          Review Mission 1: Apollo 11
+          <span>RESTART EXPEDITION JOURNEY (PAGE 1)</span>
         </button>
       </div>
     </div>

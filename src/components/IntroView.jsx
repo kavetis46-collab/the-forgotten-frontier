@@ -1,10 +1,10 @@
 import React from 'react';
-import { Sparkles, ArrowRight, Compass, Shield, Globe } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Compass } from 'lucide-react';
 import { spaceAudio } from '../utils/audio';
 
 export default function IntroView({ onStartJourney, onBackToOpening }) {
   return (
-    <div className="relative min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-20 z-10 text-center select-none animate-fade-in pointer-events-auto">
+    <div className="relative min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-16 z-10 text-center select-none animate-fade-in pointer-events-auto">
       {/* Background Subtle Gradient Box */}
       <div className="max-w-4xl mx-auto glass-panel-glow rounded-3xl p-8 sm:p-14 border border-cyan-500/20 shadow-2xl relative overflow-hidden">
         {/* Decorative corner brackets */}
@@ -64,22 +64,41 @@ export default function IntroView({ onStartJourney, onBackToOpening }) {
               spaceAudio.playWarp();
               onStartJourney();
             }}
-            className="w-full sm:w-auto px-10 py-5 rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black font-mono tracking-wider text-base sm:text-lg flex items-center justify-center gap-3 shadow-xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all group"
+            className="w-full sm:w-auto px-10 py-5 rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black font-mono tracking-wider text-base sm:text-lg flex items-center justify-center gap-3 shadow-xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all group cursor-pointer"
           >
-            <span>BEGIN THE JOURNEY</span>
+            <span>PROCEED TO DESTINATIONS (MOON &amp; MARS)</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
-
-          <button
-            onClick={() => {
-              spaceAudio.playClick();
-              onBackToOpening();
-            }}
-            className="text-xs font-mono text-slate-400 hover:text-white px-4 py-2 transition-colors"
-          >
-            ← View Orbital Panorama
-          </button>
         </div>
+      </div>
+
+      {/* ── BOTTOM PAGE ADVANCE BAR ── */}
+      <div className="w-full max-w-4xl mx-auto mt-8 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
+        <button
+          onClick={() => {
+            spaceAudio.playClick();
+            onBackToOpening();
+          }}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 hover:text-white transition-all cursor-pointer"
+        >
+          <ArrowLeft className="w-4 h-4 text-slate-400" />
+          <span>← PREVIOUS: OPENING HERO</span>
+        </button>
+
+        <span className="text-[11px] uppercase tracking-widest text-slate-500 hidden sm:block">
+          PAGE 2 OF 5 • PROLOGUE
+        </span>
+
+        <button
+          onClick={() => {
+            spaceAudio.playWarp();
+            onStartJourney();
+          }}
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500/30 to-blue-600/30 hover:from-cyan-500/45 hover:to-blue-600/45 border border-cyan-500/50 text-cyan-300 hover:text-white font-bold transition-all shadow-md shadow-cyan-500/15 cursor-pointer"
+        >
+          <span>NEXT: CELESTIAL DESTINATIONS</span>
+          <ArrowRight className="w-4 h-4 text-cyan-400" />
+        </button>
       </div>
     </div>
   );

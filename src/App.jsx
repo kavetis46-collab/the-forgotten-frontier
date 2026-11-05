@@ -12,8 +12,8 @@ import { MISSIONS } from './data/missionsData';
 import { spaceAudio } from './utils/audio';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('main'); // 'main' | 'mission'
-  const [activeNavSection, setActiveNavSection] = useState('hero'); // 'hero' | 'intro' | 'destination' | 'learn'
+  // Discrete Page Views: 'hero' (Page 1) | 'intro' (Page 2) | 'destination' (Page 3) | 'learn' (Page 4) | 'mission' (Page 5)
+  const [currentView, setCurrentView] = useState('hero');
   const [currentMissionId, setCurrentMissionId] = useState('apollo-11-descent-stage');
   const [isWarping, setIsWarping] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -29,29 +29,12 @@ export default function App() {
     }
   });
 
-  // Track scroll percentage and current visible section for smooth navigation & HUD
+  // Track scroll percentage within the active page for progress indicator
   useEffect(() => {
     const handleScroll = () => {
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
       const progress = totalScroll > 0 ? Math.min(Math.max(window.scrollY / totalScroll, 0), 1) : 0;
       setScrollProgress(progress);
-
-      if (currentView !== 'mission') {
-        const scrollMid = window.scrollY + window.innerHeight * 0.35;
-        const introEl = document.getElementById('intro');
-        const destEl = document.getElementById('destination');
-        const learnEl = document.getElementById('learn');
-
-        if (learnEl && scrollMid >= learnEl.offsetTop) {
-          setActiveNavSection('learn');
-        } else if (destEl && scrollMid >= destEl.offsetTop) {
-          setActiveNavSection('destination');
-        } else if (introEl && scrollMid >= introEl.offsetTop) {
-          setActiveNavSection('intro');
-        } else {
-          setActiveNavSection('hero');
-        }
-      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -61,41 +44,17 @@ export default function App() {
 
   // Current active mission object (guaranteed up-to-date)
   const activeMission = MISSIONS.find(m => m.id === currentMissionId) || MISSIONS[0];
-  const targetBody = currentView === 'mission' ? activeMission.body : (activeNavSection === 'destination' ? 'both' : (activeNavSection === 'intro' ? 'moon' : 'hero'));
+  const targetBody = currentView === 'mission'
+    ? activeMission.body
+    : (currentView === 'destination' ? 'both' : (currentView === 'intro' ? 'moon' : 'hero'));
 
-  // Universal Navigation Handler with Smooth Scroll & Instant Section Jumping
+  // Universal Navigation Handler: Discrete page switching with instant scroll-to-top
   const handleNavigate = (view, missionId = null) => {
     if (missionId) {
       setCurrentMissionId(missionId);
     }
-
-    if (view === 'mission') {
-      setCurrentView('mission');
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    } else {
-      if (currentView === 'mission') {
-        setCurrentView('main');
-        setTimeout(() => {
-          if (view === 'hero') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          } else {
-            document.getElementById(view)?.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 50);
-      } else {
-        if (view === 'hero') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          document.getElementById(view)?.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-      setActiveNavSection(view);
-    }
-  };
-
-  // Begin journey from Page 2
-  const handleStartJourney = () => {
-    handleNavigate('destination');
+    setCurrentView(view);
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   // Audio Toggle
@@ -116,54 +75,39 @@ export default function App() {
   };
 
   // ================= AUTOMATIC MISSION PROGRESSION LOGIC =================
-  // Moon 1 (Apollo 11) -> Moon 2 (Apollo 15) -> Moon 3 (Laser Retroreflector) -> Mars 1 (Opportunity)
-  // Mars 1 (Opportunity) -> Mars 2 (Ingenuity) -> Mars 3 (Viking 1) -> Moon 1 (Apollo 11)
-  // When all 6 are completed -> launches to What Did We Learn?
   const handleAutoAdvance = (completedMissionId) => {
     const moonIds = ['apollo-11-descent-stage', 'apollo-15-rover', 'lunar-retroreflector'];
     const marsIds = ['opportunity-rover', 'ingenuity-helicopter', 'viking-1-lander'];
 
     if (completedMissionId === 'apollo-11-descent-stage') {
-      // Advance to Moon Mission 2
-      handleNavigate('mission', 'apollo-15-rover', 'TRAJECTORY: APOLLO 15 LUNAR ROVER');
+      handleNavigate('mission', 'apollo-15-rover');
     } else if (completedMissionId === 'apollo-15-rover') {
-      // Advance to Moon Mission 3
-      handleNavigate('mission', 'lunar-retroreflector', 'TRAJECTORY: LASER RETROREFLECTOR');
+      handleNavigate('mission', 'lunar-retroreflector');
     } else if (completedMissionId === 'lunar-retroreflector') {
-      // All 3 Moon missions finished! Auto-advance to Mars!
       const remainingMars = marsIds.filter(id => {
         const m = MISSIONS.find(item => item.id === id);
         return !unlockedBadges.includes(m?.quiz.badgeName);
       });
 
       if (remainingMars.length > 0) {
-        const nextMarsId = remainingMars[0];
-        const nextMars = MISSIONS.find(item => item.id === nextMarsId);
-        handleNavigate('mission', nextMarsId, `🌕 3 MOON MISSIONS COMPLETE ➔ LAUNCHING TO MARS: ${nextMars?.artifact.toUpperCase()}`);
+        handleNavigate('mission', remainingMars[0]);
       } else {
-        // Both Moon and Mars are done!
-        handleNavigate('learn', null, 'ALL 6 EXPEDITIONS COMPLETE ➔ WHAT DID WE LEARN?');
+        handleNavigate('learn');
       }
     } else if (completedMissionId === 'opportunity-rover') {
-      // Advance to Mars Mission 2
-      handleNavigate('mission', 'ingenuity-helicopter', 'TRAJECTORY: INGENUITY HELICOPTER');
+      handleNavigate('mission', 'ingenuity-helicopter');
     } else if (completedMissionId === 'ingenuity-helicopter') {
-      // Advance to Mars Mission 3
-      handleNavigate('mission', 'viking-1-lander', 'TRAJECTORY: VIKING 1 LANDER');
+      handleNavigate('mission', 'viking-1-lander');
     } else if (completedMissionId === 'viking-1-lander') {
-      // All 3 Mars missions finished! Auto-advance to Moon!
       const remainingMoon = moonIds.filter(id => {
         const m = MISSIONS.find(item => item.id === id);
         return !unlockedBadges.includes(m?.quiz.badgeName);
       });
 
       if (remainingMoon.length > 0) {
-        const nextMoonId = remainingMoon[0];
-        const nextMoon = MISSIONS.find(item => item.id === nextMoonId);
-        handleNavigate('mission', nextMoonId, `🔴 3 MARS MISSIONS COMPLETE ➔ LAUNCHING TO THE MOON: ${nextMoon?.artifact.toUpperCase()}`);
+        handleNavigate('mission', remainingMoon[0]);
       } else {
-        // Both Moon and Mars are done!
-        handleNavigate('learn', null, 'ALL 6 EXPEDITIONS COMPLETE ➔ WHAT DID WE LEARN?');
+        handleNavigate('learn');
       }
     }
   };
@@ -171,7 +115,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-[#02040a] text-slate-100 selection:bg-cyan-500 selection:text-black overflow-x-hidden font-sans">
       
-      {/* Three.js Interactive 3D Cosmic Background (Real NASA Textures + Shining Twinkling Stars) */}
+      {/* Three.js Interactive 3D Cosmic Background */}
       <CosmicBackground 
         currentView={currentView}
         targetBody={targetBody}
@@ -181,20 +125,22 @@ export default function App() {
       {/* Atmospheric Galaxy Nebula Glow Overlay */}
       <div className="fixed inset-0 galaxy-nebula-glow pointer-events-none z-0" />
 
-      {/* Top Global Scroll Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-slate-950/80 pointer-events-none">
-        <div 
-          className="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-amber-400 transition-all duration-150 ease-out shadow-lg shadow-purple-500/50"
-          style={{ width: `${scrollProgress * 100}%` }}
-        />
-      </div>
+      {/* Top Global Scroll Progress Bar (active on scrollable views) */}
+      {currentView !== 'hero' && (
+        <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-slate-950/80 pointer-events-none">
+          <div 
+            className="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-amber-400 transition-all duration-150 ease-out shadow-lg shadow-purple-500/50"
+            style={{ width: `${scrollProgress * 100}%` }}
+          />
+        </div>
+      )}
 
-      {/* Interactive Solar System Scroll HUD Mini-Map Radar (Desktop & Tablet) */}
-      <SolarSystemScrollHUD />
+      {/* Interactive Solar System Mini-Map Radar (Desktop & Tablet) */}
+      <SolarSystemScrollHUD currentView={currentView} onNavigate={handleNavigate} />
 
       {/* Navigation Bar */}
       <Navbar
-        currentView={currentView === 'mission' ? 'mission' : activeNavSection}
+        currentView={currentView}
         currentMissionId={currentMissionId}
         missions={MISSIONS}
         unlockedBadges={unlockedBadges}
@@ -206,78 +152,81 @@ export default function App() {
 
       {/* Main Dynamic View Controller */}
       <main className="relative z-10">
-        {currentView !== 'mission' ? (
-          <div className="relative">
-            {/* SECTION 1: The Opening Hero (Same Peak, Same Background, Animated Orbital Ring, Smooth Scroll) */}
-            <section id="hero">
-              <OpeningView
-                onBegin={() => {
-                  handleNavigate('intro', null, 'ASCENT: ENTER THE COSMOS');
-                }}
-              />
-            </section>
+        {/* PAGE 1: The Opening Hero — No scrolling down allowed; entry strictly via "Enter the Cosmos" */}
+        {currentView === 'hero' && (
+          <OpeningView
+            onBegin={() => {
+              handleNavigate('intro');
+            }}
+          />
+        )}
 
-            {/* SECTION 2: The Forgotten Frontier Prologue */}
-            <section id="intro" className="min-h-screen py-16 flex flex-col justify-center">
-              <IntroView
-                onStartJourney={() => {
-                  handleNavigate('destination', null, 'ASCENT TRAJECTORY: LUNAR & MARTIAN DESTINATIONS');
-                }}
-                onBackToOpening={() => {
-                  handleNavigate('hero', null, 'ASCENT: ORBITAL PANORAMA');
-                }}
-              />
-            </section>
-
-            {/* SECTION 3: Choose Your Destination (The Moon & Mars) */}
-            <section id="destination" className="min-h-screen py-16">
-              <DestinationView
-                missions={MISSIONS}
-                onSelectMission={(id) => {
-                  const m = MISSIONS.find(item => item.id === id);
-                  handleNavigate('mission', id, `ASCENT: ${m ? m.artifact.toUpperCase() : 'MISSION'}`);
-                }}
-                unlockedBadges={unlockedBadges}
-                onGoToLearn={() => {
-                  handleNavigate('learn', null, 'ASCENT: WHAT WE LEARNED');
-                }}
-              />
-            </section>
-
-            {/* SECTION 4: What Did We Learn? */}
-            <section id="learn" className="min-h-screen py-16">
-              <LearningsView
-                unlockedBadges={unlockedBadges}
-                totalMissions={MISSIONS.length}
-                onRestartJourney={() => {
-                  handleNavigate('hero', null, 'ASCENT: RESTART JOURNEY');
-                }}
-                onSelectMission={(id) => {
-                  const m = MISSIONS.find(item => item.id === id);
-                  handleNavigate('mission', id, `ASCENT: ${m ? m.artifact.toUpperCase() : 'MISSION'}`);
-                }}
-              />
-            </section>
+        {/* PAGE 2: The Forgotten Frontier Prologue */}
+        {currentView === 'intro' && (
+          <div className="min-h-screen py-16 flex flex-col justify-center">
+            <IntroView
+              onStartJourney={() => {
+                handleNavigate('destination');
+              }}
+              onBackToOpening={() => {
+                handleNavigate('hero');
+              }}
+            />
           </div>
-        ) : (
-          /* SECTION 5: Individual Mission Pages (Story, Timeline, Interactive Map, Facts, Quiz with Auto-Advance) */
+        )}
+
+        {/* PAGE 3: Choose Your Destination (The Moon & Mars) */}
+        {currentView === 'destination' && (
+          <div className="min-h-screen py-16">
+            <DestinationView
+              missions={MISSIONS}
+              onSelectMission={(id) => {
+                handleNavigate('mission', id);
+              }}
+              unlockedBadges={unlockedBadges}
+              onGoToLearn={() => {
+                handleNavigate('learn');
+              }}
+              onBackToIntro={() => {
+                handleNavigate('intro');
+              }}
+            />
+          </div>
+        )}
+
+        {/* PAGE 4: What Did We Learn? */}
+        {currentView === 'learn' && (
+          <div className="min-h-screen py-16">
+            <LearningsView
+              unlockedBadges={unlockedBadges}
+              totalMissions={MISSIONS.length}
+              onRestartJourney={() => {
+                handleNavigate('hero');
+              }}
+              onBackToDestinations={() => {
+                handleNavigate('destination');
+              }}
+              onSelectMission={(id) => {
+                handleNavigate('mission', id);
+              }}
+            />
+          </div>
+        )}
+
+        {/* PAGE 5: Individual Mission Pages */}
+        {currentView === 'mission' && (
           <MissionDetailView
-            key={activeMission.id} // Re-mount key ensures clean state on every mission change!
+            key={activeMission.id}
             mission={activeMission}
             allMissions={MISSIONS}
             onBackToDestinations={() => {
-              setCurrentView('main');
-              setActiveNavSection('destination');
-              setTimeout(() => {
-                document.getElementById('destination')?.scrollIntoView({ behavior: 'instant' });
-              }, 40);
+              handleNavigate('destination');
             }}
             onSelectMission={(id) => {
               if (id === 'learn') {
-                handleNavigate('learn', null, 'ASCENT: WHAT WE LEARNED');
+                handleNavigate('learn');
               } else {
-                const m = MISSIONS.find(item => item.id === id);
-                handleNavigate('mission', id, `ASCENT: ${m ? m.artifact.toUpperCase() : 'MISSION'}`);
+                handleNavigate('mission', id);
               }
             }}
             onCompleteQuiz={handleCompleteQuiz}
@@ -294,7 +243,7 @@ export default function App() {
         missions={MISSIONS}
         unlockedBadges={unlockedBadges}
         onSelectMission={(id) => handleNavigate('mission', id)}
-        onGoToLearn={() => handleNavigate('learn', null, 'ASCENT: WHAT WE LEARNED')}
+        onGoToLearn={() => handleNavigate('learn')}
       />
 
       {/* Global Cinematic Letterbox HUD Lines */}

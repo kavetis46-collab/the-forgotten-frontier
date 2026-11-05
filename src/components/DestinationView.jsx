@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { 
   ArrowRight, 
+  ArrowLeft,
   MapPin, 
   Calendar, 
   Award, 
@@ -17,7 +18,8 @@ export default function DestinationView({
   missions,
   onSelectMission,
   unlockedBadges,
-  onGoToLearn
+  onGoToLearn,
+  onBackToIntro
 }) {
   const [activeDestination, setActiveDestination] = useState('moon'); // 'moon' | 'mars' | 'both'
 
@@ -276,16 +278,33 @@ export default function DestinationView({
       )}
 
       {/* Bottom Call to Action: Proceed to What Did We Learn? */}
-      <div className="mt-16 text-center pt-8 border-t border-slate-800/80">
-        <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-3">
-          COMPREHENSIVE EXPLORATION COMPLETE?
-        </p>
+      <div className="mt-16 pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-6 max-w-7xl mx-auto">
+        <button
+          onClick={() => {
+            spaceAudio.playClick();
+            if (onBackToIntro) onBackToIntro();
+          }}
+          className="flex items-center gap-2 px-5 py-3 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white font-mono text-xs transition-all cursor-pointer"
+        >
+          <ArrowLeft className="w-4 h-4 text-slate-400" />
+          <span>← PREVIOUS: PROLOGUE</span>
+        </button>
+
+        <div className="text-center">
+          <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-1">
+            COMPREHENSIVE EXPLORATION COMPLETE?
+          </p>
+          <span className="text-[11px] text-slate-500 font-mono">
+            PAGE 3 OF 5 • CELESTIAL DESTINATION MATRIX
+          </span>
+        </div>
+
         <button
           onClick={() => {
             spaceAudio.playWarp();
             onGoToLearn();
           }}
-          className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-slate-900 hover:bg-slate-800 border border-cyan-500/40 text-cyan-300 font-mono text-sm font-bold shadow-lg shadow-cyan-500/10 hover:shadow-cyan-500/20 hover:scale-105 active:scale-95 transition-all"
+          className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold font-mono text-sm shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 active:scale-95 transition-all cursor-pointer"
         >
           <span>PROCEED TO FINAL CHAPTER: WHAT DID WE LEARN?</span>
           <ArrowRight className="w-4 h-4" />
