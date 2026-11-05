@@ -262,7 +262,7 @@ export default function MissionDetailView({
                   <div className="flex items-center gap-2 mb-2">
                     <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
                     <span className="text-xs font-telemetry tracking-widest text-cyan-400 uppercase font-semibold">
-                      ARCHIVAL NARRATIVE RECORD // APOLLO 11 HISTORIC DISPATCH
+                      ARCHIVAL NARRATIVE RECORD // {mission.badge} HISTORIC DISPATCH
                     </span>
                   </div>
                   <h3 className="text-2xl sm:text-3xl md:text-4xl font-black font-cinematic text-white tracking-wide">

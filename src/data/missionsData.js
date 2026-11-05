@@ -199,24 +199,47 @@ export const MISSIONS = [
 
     overview: 'The first astronauts left footprints on the moon, but the next explorers want to leave something more—tracks that would travel far beyond their landing site. That is where the moon buggy came in.',
 
+    storyTitle: 'THE DUNE BUGGY: PARKED FOREVER AT HADLEY RILLE',
+
     story: [
       {
-        heading: 'Folding an Automobile into a Spaceship Bay',
-        text: 'The Lunar Roving Vehicle was an engineering miracle built by Boeing and GM. Made of lightweight aluminum alloy 2014, it had to fold like origami into a tiny wedge-shaped bay on the Lunar Module Falcon. On the Moon, astronauts pulled two dacron lanyard cords, and the rover unfolded itself in five seconds through spring-loaded hinges.',
-        image: 'https://images-assets.nasa.gov/image/as15-85-11471/as15-85-11471~orig.jpg',
-        caption: 'The Lunar Roving Vehicle parked near the edge of the breathtaking 1,000-foot-deep Hadley Rille canyon.'
+        sectionId: 1,
+        paragraphs: [
+          'Imagine a tiny electric car driving across a world with no roads, no traffic and no petrol stations. Sounds unusual, right? Yet, this really happened on the Moon.'
+        ],
+        image: '/images/apollo15/moon-buggy-lrv.jpg',
+        caption: 'PICTURE 1 — The Moon Buggy: 45 Years Since the First Lunar Rover Drive on the Moon'
       },
       {
-        heading: 'Tires of Piano Wire, Not Rubber',
-        text: 'Standard rubber tires would have frozen rock-hard and shattered in the -150°C lunar night. Instead, engineers hand-wove tires from 800 strands of zinc-coated steel piano wire, fitted with chevron-shaped titanium treads for traction on powdery dust. Powered by four quarter-horsepower electric hub motors, it handled steep slopes with ease.',
-        image: 'https://images-assets.nasa.gov/image/as15-82-11122/as15-82-11122~orig.jpg',
-        caption: 'Close-up of the woven wire-mesh tires and the T-shaped steering controller used to steer the rover.'
+        sectionId: 2,
+        paragraphs: [
+          'On Apollo 15, astronauts David Scott and James Irwin had something no Moon explorers had used before — a vehicle of their own. It was called the Lunar Roving Vehicle, or simply, the Moon Buggy. With four wheels and battery power, it was ready to explore a world humans had only walked across before.'
+        ],
+        image: '/images/apollo15/david-scott-driving.jpg',
+        caption: "PICTURE 2 — David Scott driving the rover: NASA's first moon buggy mission celebrates 50th anniversary"
       },
       {
-        heading: 'Parked to Film Their Own Farewell',
-        text: 'Before climbing into Falcon for the journey home, Commander Dave Scott drove the rover 100 meters east of the lander and pointed its remote-controlled color TV camera directly at the spacecraft. From Mission Control in Houston, 384,000 km away, operator Ed Fendell tilt-controlled the camera to broadcast the first live television transmission of humans launching off another world.',
-        image: 'https://images-assets.nasa.gov/image/as15-88-11863/as15-88-11863~orig.jpg',
-        caption: 'Dave Scott working at the back of the rover, with 15,000-foot Mount Hadley towering behind him.'
+        sectionId: 3,
+        paragraphs: [
+          'The little vehicle travelled across the Hadley–Apennine region, carrying the astronauts over the lunar landscape. They explored places beyond walking distance, collected Moon rocks and discovered more about the world beneath their feet.'
+        ],
+        image: '/images/apollo15/collecting-moon-samples.jpg',
+        caption: 'PICTURE 3 — Collecting Moon samples: Astronauts exploring the Hadley–Apennine region with the Moon Buggy'
+      },
+      {
+        sectionId: 4,
+        paragraphs: [
+          'But the journey had an ending. When it was time for David Scott and James Irwin to leave the Moon and rejoin Alfred Worden in orbit, there was no journey home for their four-wheeled companion. The astronauts took off, leaving the Moon Buggy right where its adventure had ended.'
+        ],
+        image: '/images/apollo15/rover-left-on-moon.jpg',
+        caption: 'PICTURE 4 — The rover left on the Moon: The Apollo 15 Lunar Rover parked forever at Hadley Rille'
+      },
+      {
+        sectionId: 5,
+        paragraphs: [
+          'And there it remains — a little explorer from Earth, parked forever at Hadley, with no driver coming back to start its next journey.'
+        ],
+        closingTribute: 'And there it remains — a little explorer from Earth, parked forever at Hadley, with no driver coming back to start its next journey.'
       }
     ],
 
