@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, ArrowRight, Radio, Volume2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { spaceAudio } from '../utils/audio';
 
 /* ============================================================
@@ -11,9 +11,10 @@ import { spaceAudio } from '../utils/audio';
    - Staggered text reveal animation
    - Bottom lunar surface terrain strip
    - CSS nebula / atmosphere halos
+   - Smooth, focused, clean layout
    ============================================================ */
 
-export default function OpeningView({ onBegin, onEnableSound, isAudioMuted }) {
+export default function OpeningView({ onBegin }) {
   return (
     <div
       className="relative min-h-screen flex flex-col justify-between p-6 sm:p-12 z-10 select-none pointer-events-auto overflow-hidden"
@@ -355,7 +356,7 @@ export default function OpeningView({ onBegin, onEnableSound, isAudioMuted }) {
       }}/>
 
       {/* ════════════════════════════════════════════════════════════
-          UI CONTENT — all original text, nav, and buttons unchanged
+          UI CONTENT — Smooth, Clean, Cinematic
           ════════════════════════════════════════════════════════════ */}
 
       {/* Top Telemetry Bar */}
@@ -376,67 +377,18 @@ export default function OpeningView({ onBegin, onEnableSound, isAudioMuted }) {
         </div>
       </div>
 
-      {/* Planet Labels + Title Card */}
+      {/* Centre Title Card */}
       <div
-        className="relative w-full max-w-6xl mx-auto my-auto pointer-events-none"
-        style={{ zIndex:10 }}
+        className="relative w-full max-w-4xl mx-auto my-auto pointer-events-none"
+        style={{ zIndex: 10 }}
       >
-        {/* Moon label — left side */}
-        <div
-          className="absolute left-0 sm:left-1 top-1/2 -translate-y-1/2 hidden md:block"
-          style={{ animation:'heroFadeIn 1s ease-out 1.6s both' }}
-        >
-          <div className="flex flex-col gap-1.5">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 border border-slate-500/40 backdrop-blur-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-200 animate-pulse"/>
-              <span className="text-[11px] font-mono text-slate-100 tracking-widest font-semibold">THE MOON</span>
-            </div>
-            <span className="text-[9px] font-mono text-slate-500 pl-3 tracking-wider">3 HISTORIC RELICS • 384,400 KM</span>
-          </div>
-        </div>
-
-        {/* Earth label — small, upper centre */}
-        <div
-          className="absolute left-1/2 -translate-x-1/2 -top-20 sm:-top-28 hidden lg:block"
-          style={{ animation:'heroFadeIn 1s ease-out 2.2s both' }}
-        >
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/70 border border-cyan-500/25 backdrop-blur-md">
-            <span className="w-1 h-1 rounded-full bg-cyan-400 animate-pulse"/>
-            <span className="text-[9px] font-mono text-cyan-400 tracking-widest">EARTH • HOME WORLD • DISTANT</span>
-          </div>
-        </div>
-
-        {/* Mars label — right side */}
-        <div
-          className="absolute right-0 sm:right-1 top-1/2 -translate-y-1/2 hidden md:block"
-          style={{ animation:'heroFadeIn 1s ease-out 1.8s both' }}
-        >
-          <div className="flex flex-col gap-1.5 items-end">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 border border-rose-500/40 backdrop-blur-md">
-              <span className="text-[11px] font-mono text-rose-300 tracking-widest font-semibold">MARS</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"/>
-            </div>
-            <span className="text-[9px] font-mono text-slate-500 pr-3 tracking-wider">3 EXPLORATION SITES • 225M KM</span>
-          </div>
-        </div>
-
-        {/* ── CENTRE TITLE CARD ─────────────────────────── */}
-        <div className="text-center py-12 pointer-events-auto max-w-3xl mx-auto">
-
-          {/* Badge */}
-          <div
-            className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-cyan-950/65 border border-cyan-500/40 text-cyan-300 text-xs font-mono tracking-widest uppercase mb-7 backdrop-blur-md"
-            style={{ animation:'heroTitleUp 1s cubic-bezier(0.16,1,0.3,1) 0.5s both' }}
-          >
-            <Sparkles className="w-3.5 h-3.5"/>
-            <span>Interactive Extraterrestrial Museum</span>
-          </div>
+        <div className="text-center py-10 pointer-events-auto max-w-3xl mx-auto">
 
           {/* Main Title */}
           <h1
             className="text-4xl sm:text-6xl md:text-7xl font-black font-cinematic text-white tracking-tight leading-none mb-7"
             style={{
-              animation: 'heroTitleUp 1.1s cubic-bezier(0.16,1,0.3,1) 0.7s both',
+              animation: 'heroTitleUp 1.1s cubic-bezier(0.16,1,0.3,1) 0.5s both',
               textShadow:
                 '0 0 80px rgba(56,189,248,0.25),' +
                 ' 0 0 160px rgba(56,189,248,0.1),' +
@@ -446,66 +398,43 @@ export default function OpeningView({ onBegin, onEnableSound, isAudioMuted }) {
             THE FORGOTTEN FRONTIER
           </h1>
 
-          {/* Subtitle */}
+          {/* Subtitle Lines */}
           <p
-            className="text-base sm:text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed mb-11"
+            className="text-base sm:text-xl text-slate-200 font-light max-w-2xl mx-auto leading-relaxed mb-10"
             style={{
-              animation: 'heroTitleUp 1s cubic-bezier(0.16,1,0.3,1) 0.95s both',
-              textShadow: '0 2px 16px rgba(0,0,0,0.9)',
+              animation: 'heroTitleUp 1s cubic-bezier(0.16,1,0.3,1) 0.75s both',
+              textShadow: '0 2px 18px rgba(0,0,0,0.95)',
             }}
           >
-            Across the silent seas of the Moon and the red plains of Mars, humanity has left behind its greatest
-            monuments. Discover their stories, pinpoint their locations, and uncover what they taught our world.
+            Not everything returns from space. Some machines remain on distant worlds long after their missions end. Silent, forgotten, yet filled with stories. It's time to uncover them.
           </p>
 
-          {/* Action Buttons — unchanged */}
+          {/* Single Clean CTA Action Button */}
           <div
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-            style={{ animation:'heroTitleUp 1s cubic-bezier(0.16,1,0.3,1) 1.2s both' }}
+            className="flex items-center justify-center"
+            style={{ animation: 'heroTitleUp 1s cubic-bezier(0.16,1,0.3,1) 1.0s both' }}
           >
             <button
               onClick={() => { spaceAudio.playWarp(); onBegin(); }}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold font-mono tracking-wider text-sm sm:text-base flex items-center justify-center gap-3 shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/45 hover:scale-105 active:scale-95 transition-all group"
+              className="px-9 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold font-mono tracking-wider text-sm sm:text-base flex items-center justify-center gap-3 shadow-lg shadow-cyan-500/35 hover:shadow-cyan-500/50 hover:scale-105 active:scale-95 transition-all group cursor-pointer"
             >
               <span>ENTER THE COSMOS</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform"/>
             </button>
-
-            {isAudioMuted && (
-              <button
-                onClick={() => { onEnableSound(); }}
-                className="w-full sm:w-auto px-6 py-4 rounded-full bg-black/70 hover:bg-slate-900 border border-slate-700/80 text-xs font-mono text-slate-300 hover:text-white flex items-center justify-center gap-2 backdrop-blur-md transition-all"
-              >
-                <Volume2 className="w-4 h-4 text-cyan-400"/>
-                <span>Enable Atmospheric Space Audio</span>
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Orbital relay badge — lower left, subtle */}
-        <div
-          className="absolute bottom-8 left-1/4 hidden xl:block"
-          style={{ animation:'heroFadeIn 1s ease-out 2.4s both' }}
-        >
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-amber-500/25 backdrop-blur-md">
-            <Radio className="w-3 h-3 text-amber-400 animate-pulse"/>
-            <span className="text-[9px] font-mono text-amber-400">ORBITAL RELAY • TELEMETRY ACTIVE</span>
           </div>
         </div>
       </div>
 
-      {/* Bottom HUD Status Bar — unchanged */}
+      {/* Bottom HUD Status Bar */}
       <div
         className="relative flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-slate-500 border-t border-slate-800/80 pt-4 gap-2"
-        style={{ zIndex:10, animation:'heroFadeIn 1s ease-out 1.8s both' }}
+        style={{ zIndex: 10, animation: 'heroFadeIn 1s ease-out 1.4s both' }}
       >
         <div className="flex items-center gap-2">
           <span>COORDINATES: LUNAR REGOLITH &amp; MARTIAN CRATERS</span>
         </div>
         <div className="flex items-center gap-4">
           <span>6 FEATURED ARTIFACTS</span>
-          <span>INTERACTIVE CARTOGRAPHY</span>
           <span>NASA ARCHIVE PROJECT</span>
         </div>
       </div>
