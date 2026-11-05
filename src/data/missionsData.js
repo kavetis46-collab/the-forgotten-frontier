@@ -139,24 +139,24 @@ export const MISSIONS = [
 
     facts: [
       {
-        title: 'Silicon Goodwill Message Disc',
-        description: 'Tucked inside a small aluminum case left on the descent stage is a tiny coin-sized silicon disc containing goodwill messages from leaders of 73 nations, reduced 200 times using microfiche technology.',
-        badge: 'Diplomacy'
+        badge: 'Diplomacy',
+        title: 'Diplomacy 🌍',
+        description: 'Apollo 11 carried a tiny silicon disk containing goodwill messages from 73 countries. It was left on the Moon as a symbol of peace and friendship between nations.'
       },
       {
-        title: 'Gold Foil Still Intact',
-        description: 'Because the Moon has no atmosphere, wind, or rain, the gold Kapton multi-layer thermal insulation on the descent stage remains largely intact today, untouched except by micrometeorites and cosmic rays.',
-        badge: 'Preservation'
+        badge: 'Preservation',
+        title: 'Preservation 🌕',
+        description: "The Moon has almost no atmosphere or rain. Because of this, the Eagle's Descent Stage and the astronauts' footprints can remain on the lunar surface for an extremely long time."
       },
       {
-        title: 'A Memorial to Fallen Space Pioneers',
-        description: 'The crew placed medals honoring Soviet cosmonauts Yuri Gagarin and Vladimir Komarov, alongside an Apollo 1 patch honoring Gus Grissom, Ed White, and Roger Chaffee.',
-        badge: 'Tribute'
+        badge: 'Tribute',
+        title: 'Tribute 🏅',
+        description: 'A plaque attached to the Eagle\'s Descent Stage carries the words, “We came in peace for all mankind.” It was left on the Moon to remember humanity\'s first crewed lunar landing.'
       },
       {
-        title: 'Visible from Lunar Orbit',
-        description: 'NASA’s Lunar Reconnaissance Orbiter (LRO) flying just 24 km above the Moon captured unmistakable images of Eagle’s descent stage casting a long black shadow across the gray soil.',
-        badge: 'Reconnaissance'
+        badge: 'Reconnaissance',
+        title: 'Reconnaissance 🔭',
+        description: 'Before Apollo 11 landed, NASA sent robotic missions like Lunar Orbiter and Surveyor to study the Moon. Their photographs and measurements helped NASA choose a suitable landing site for the astronauts.'
       }
     ],
 
