@@ -161,15 +161,14 @@ export const MISSIONS = [
     ],
 
     quiz: {
-      question: 'What famous phrase is inscribed on the commemorative plaque left on the Apollo 11 Lunar Module descent stage?',
+      question: "What happened to the Eagle's Ascent Stage after it lifted off from the Moon?",
       options: [
-        '"For the glory of planet Earth and the stars"',
-        '"We came in peace for all mankind"',
-        '"The Eagle has landed in tranquility forever"',
-        '"A giant leap into the great unknown"'
+        'It returned directly to Earth.',
+        'It rejoined Michael Collins in lunar orbit.',
+        'It landed at another location on the Moon.'
       ],
       correctIndex: 1,
-      explanation: 'The curved stainless steel plaque attached to Eagle’s ladder strut famously reads: "HERE MEN FROM THE PLANET EARTH FIRST SET FOOT UPON THE MOON JULY 1969, A.D. WE CAME IN PEACE FOR ALL MANKIND."',
+      explanation: "Eagle's Ascent Stage carried Neil Armstrong and Buzz Aldrin off the lunar surface and successfully rejoined Michael Collins aboard the Command Module in lunar orbit.",
       badgeName: 'Tranquility Base Historian'
     }
   },
