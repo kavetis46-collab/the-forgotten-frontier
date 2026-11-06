@@ -18,7 +18,6 @@ export default function App() {
   const [isWarping, setIsWarping] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  const [isAudioMuted, setIsAudioMuted] = useState(true);
   const [flightLogOpen, setFlightLogOpen] = useState(false);
   const [unlockedBadges, setUnlockedBadges] = useState(() => {
     try {
@@ -55,12 +54,6 @@ export default function App() {
     }
     setCurrentView(view);
     window.scrollTo({ top: 0, behavior: 'instant' });
-  };
-
-  // Audio Toggle
-  const handleToggleAudio = () => {
-    const isUnmuted = spaceAudio.toggleMute();
-    setIsAudioMuted(!isUnmuted);
   };
 
   // Handle Quiz completion badge persistence
@@ -144,8 +137,6 @@ export default function App() {
         currentMissionId={currentMissionId}
         missions={MISSIONS}
         unlockedBadges={unlockedBadges}
-        isAudioMuted={isAudioMuted}
-        onToggleAudio={handleToggleAudio}
         onNavigate={handleNavigate}
         onOpenFlightLog={() => setFlightLogOpen(true)}
       />
@@ -156,11 +147,6 @@ export default function App() {
         {currentView === 'hero' && (
           <OpeningView
             onBegin={() => {
-              if (isAudioMuted) {
-                spaceAudio.unmute();
-                setIsAudioMuted(false);
-              }
-              spaceAudio.playWarp();
               handleNavigate('intro');
             }}
           />

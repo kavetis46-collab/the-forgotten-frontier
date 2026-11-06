@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { 
   Compass, 
-  Volume2, 
-  VolumeX, 
   Award, 
   Maximize, 
   Minimize, 
@@ -19,8 +17,6 @@ export default function Navbar({
   currentMissionId,
   missions,
   unlockedBadges,
-  isAudioMuted,
-  onToggleAudio,
   onNavigate,
   onOpenFlightLog
 }) {
@@ -169,45 +165,14 @@ export default function Navbar({
           </button>
         </div>
 
-        {/* Action Tool Buttons (Audio, Flight Log, Fullscreen) */}
+        {/* Action Tool Buttons (Flight Log, Fullscreen) */}
         <div className="flex items-center gap-2">
-          
-          {/* Space Audio Synthesizer Toggle */}
-          <button
-            onClick={onToggleAudio}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono transition-all border ${
-              !isAudioMuted 
-                ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-300' 
-                : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-            }`}
-            title={!isAudioMuted ? 'Mute Space Sound' : 'Play Space Ambience'}
-          >
-            {!isAudioMuted ? (
-              <>
-                <Volume2 className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-                <span className="hidden sm:inline">Audio On</span>
-                {/* Waveform indicator */}
-                <div className="flex items-end gap-0.5 h-3">
-                  <div className="w-0.5 bg-cyan-400 h-2 animate-bounce" />
-                  <div className="w-0.5 bg-cyan-400 h-3 animate-pulse" />
-                  <div className="w-0.5 bg-cyan-400 h-1.5 animate-bounce" />
-                </div>
-              </>
-            ) : (
-              <>
-                <VolumeX className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Sound Off</span>
-              </>
-            )}
-          </button>
-
           {/* Flight Log Drawer Trigger */}
           <button
             onClick={() => {
-              spaceAudio.playClick();
               onOpenFlightLog();
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700/80 text-xs font-mono text-slate-200 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700/80 text-xs font-mono text-slate-200 transition-colors cursor-pointer"
             title="Open Astronaut Flight Log"
           >
             <Award className="w-3.5 h-3.5 text-cyan-400" />
