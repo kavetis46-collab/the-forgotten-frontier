@@ -156,6 +156,11 @@ export default function App() {
         {currentView === 'hero' && (
           <OpeningView
             onBegin={() => {
+              if (isAudioMuted) {
+                spaceAudio.unmute();
+                setIsAudioMuted(false);
+              }
+              spaceAudio.playWarp();
               handleNavigate('intro');
             }}
           />

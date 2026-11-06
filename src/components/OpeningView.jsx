@@ -241,7 +241,6 @@ export default function OpeningView({ onBegin }) {
         >
           <button
             onClick={() => {
-              spaceAudio.playWarp();
               onBegin();
             }}
             className="px-9 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold font-mono tracking-wider text-sm sm:text-base flex items-center justify-center gap-3 shadow-lg shadow-cyan-500/35 hover:shadow-cyan-500/50 hover:scale-105 active:scale-95 transition-all group cursor-pointer"
