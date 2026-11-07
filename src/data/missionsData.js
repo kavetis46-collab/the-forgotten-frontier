@@ -351,26 +351,7 @@ export const MISSIONS = [
 
     overview: 'Of all the high-tech equipment carried across 240,000 miles of space during Apollo, the simplest device proved to be the most enduring. The Laser Ranging Retroreflector contains zero electronics, zero wires, and zero batteries. Yet it is the ONLY Apollo experiment that is still actively delivering groundbreaking scientific discoveries over half a century later.',
 
-    story: [
-      {
-        heading: 'An Elegant Case of 100 Quartz Prisms',
-        text: 'Just before concluding their historic moonwalk, Buzz Aldrin placed a suitcase-sized aluminum pallet approximately 14 meters south of Eagle. Inside were 100 precision-cut corner-cube prisms of fused silica quartz. Corner cubes have an extraordinary optical property: any light ray that enters them is reflected back in the exact opposite direction, parallel to the incoming beam, directly toward the source.',
-        image: 'https://images-assets.nasa.gov/image/as11-40-5953/as11-40-5953~orig.jpg',
-        caption: 'The retroreflector array deployed on the lunar regolith, tilted to point directly at the home world.'
-      },
-      {
-        heading: 'Firing Billion-Watt Laser Pulses from Earth',
-        text: 'On Earth, massive astronomical observatories—such as the McDonald Observatory in Texas and the Apache Point Observatory in New Mexico—aim high-powered pulsed green lasers through giant telescopes at those exact coordinates on the Moon. Out of 100,000,000,000,000,000,000 photons fired in each pulse, only 1 to 5 photons survive the round trip and bounce back into the detector!',
-        image: 'https://images-assets.nasa.gov/image/PIA14457/PIA14457~orig.jpg',
-        caption: 'Laser beam firing from Earth through a telescope dome toward the Apollo reflector arrays on the Moon.'
-      },
-      {
-        heading: 'Proving Einstein and Measuring the Moon’s Retreat',
-        text: 'By timing the round trip of light (approximately 2.5 seconds) down to picoseconds, scientists measure the distance between Earth and the Moon with sub-millimeter precision. This ongoing experiment proved that the Moon is spiraling away from Earth at 3.8 centimeters per year due to tidal friction, and verified Einstein’s theory of General Relativity to unprecedented accuracy.',
-        image: 'https://images-assets.nasa.gov/image/as14-67-9386/as14-67-9386~orig.jpg',
-        caption: 'The Apollo 14 retroreflector deployed in the rolling hills of Fra Mauro.'
-      }
-    ],
+    story: [],
 
     timeline: [
       {

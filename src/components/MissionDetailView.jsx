@@ -411,46 +411,57 @@ export default function MissionDetailView({
           ) : (
             /* Standard Chapter Layout for Other Missions */
             <div className="space-y-10">
-              {mission.story.map((chapter, idx) => (
-                <div 
-                  key={idx}
-                  className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800/80 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
-                >
-                  <div className={`space-y-4 ${idx % 2 === 0 ? 'lg:col-span-7' : 'lg:col-span-7 lg:order-2'}`}>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white font-cinematic leading-snug">
-                      {chapter.heading}
-                    </h3>
-                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                      {chapter.text}
-                    </p>
-                  </div>
-
-                  <div className={`relative group ${idx % 2 === 0 ? 'lg:col-span-5' : 'lg:col-span-5 lg:order-1'}`}>
-                    <div 
-                      onClick={() => {
-                        spaceAudio.playClick();
-                        setLightboxPhoto(chapter);
-                      }}
-                      className="relative cursor-pointer overflow-hidden rounded-xl border border-slate-700/80 shadow-2xl bg-black"
-                    >
-                      <img
-                        src={chapter.image}
-                        alt={chapter.caption}
-                        className="w-full h-64 sm:h-72 object-cover transition-transform duration-500 group-hover:scale-105"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-xs font-mono text-white backdrop-blur-xs">
-                        <span>Click to Enlarge NASA Photo</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-slate-400 mt-2 italic px-1">
-                      {chapter.caption}
-                    </p>
-                  </div>
+              {mission.story.length === 0 ? (
+                <div className="p-8 sm:p-12 rounded-2xl bg-slate-900/40 border border-dashed border-cyan-500/30 text-center">
+                  <span className="text-cyan-400 font-mono text-xs uppercase tracking-widest block mb-2">
+                    AWAITING NEW NARRATIVE &amp; ARCHIVAL PHOTOGRAPHS
+                  </span>
+                  <p className="text-slate-400 text-sm max-w-md mx-auto">
+                    The story for this chapter has been cleared. Send the new story and pictures to populate this section.
+                  </p>
                 </div>
-              ))}
+              ) : (
+                mission.story.map((chapter, idx) => (
+                  <div 
+                    key={idx}
+                    className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800/80 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+                  >
+                    <div className={`space-y-4 ${idx % 2 === 0 ? 'lg:col-span-7' : 'lg:col-span-7 lg:order-2'}`}>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white font-cinematic leading-snug">
+                        {chapter.heading}
+                      </h3>
+                      <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        {chapter.text}
+                      </p>
+                    </div>
+
+                    <div className={`relative group ${idx % 2 === 0 ? 'lg:col-span-5' : 'lg:col-span-5 lg:order-1'}`}>
+                      <div 
+                        onClick={() => {
+                          spaceAudio.playClick();
+                          setLightboxPhoto(chapter);
+                        }}
+                        className="relative cursor-pointer overflow-hidden rounded-xl border border-slate-700/80 shadow-2xl bg-black"
+                      >
+                        <img
+                          src={chapter.image}
+                          alt={chapter.caption}
+                          className="w-full h-64 sm:h-72 object-cover transition-transform duration-500 group-hover:scale-105"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-xs font-mono text-white backdrop-blur-xs">
+                          <span>Click to Enlarge NASA Photo</span>
+                        </div>
+                      </div>
+                      <p className="text-xs text-slate-400 mt-2 italic px-1">
+                        {chapter.caption}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           )}
         </section>
