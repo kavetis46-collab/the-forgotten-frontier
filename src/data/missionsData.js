@@ -344,7 +344,7 @@ export const MISSIONS = [
       latFormatted: "0.6734° N",
       lngFormatted: "23.4731° E"
     },
-    heroImage: 'https://images-assets.nasa.gov/image/as11-40-5952/as11-40-5952~orig.jpg',
+    heroImage: '/images/retroreflector/the-lunar-reflector.jpg',
     heroAlt: 'The Apollo 11 Lunar Laser Ranging Retroreflector sitting on the Moon, aimed back at planet Earth',
     accentColor: '#38bdf8',
     status: 'ACTIVE – Still pinged by lasers today',
