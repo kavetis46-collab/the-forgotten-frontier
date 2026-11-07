@@ -351,7 +351,57 @@ export const MISSIONS = [
 
     overview: 'Of all the high-tech equipment carried across 240,000 miles of space during Apollo, the simplest device proved to be the most enduring. The Laser Ranging Retroreflector contains zero electronics, zero wires, and zero batteries. Yet it is the ONLY Apollo experiment that is still actively delivering groundbreaking scientific discoveries over half a century later.',
 
-    story: [],
+    storyTitle: 'THE MIRROR THAT NEVER STOPPED ANSWERING',
+
+    story: [
+      {
+        sectionId: 1,
+        paragraphs: [
+          'Imagine a tiny object sitting silently on the Moon, with no batteries, no wires and no one to operate it. Yet, even after more than 50 years, scientists on Earth can still use it to study the Moon.'
+        ],
+        image: '/images/retroreflector/the-lunar-reflector.jpg',
+        caption: 'PICTURE 1 — The Lunar Reflector: Resting on the Moon'
+      },
+      {
+        sectionId: 2,
+        paragraphs: [
+          'During Apollo 11, astronaut Buzz Aldrin placed a special device on the lunar surface. It was called a Laser Retroreflector. Unlike an ordinary mirror, it was designed to send incoming laser light back towards its source.'
+        ],
+        image: '/images/retroreflector/buzz-aldrin-deploying-reflector.jpg',
+        caption: 'PICTURE 2 — Buzz Aldrin deploying the reflector: Astronaut placing the retroreflector on the lunar surface'
+      },
+      {
+        sectionId: 3,
+        paragraphs: [
+          'Inside this small device were special glass pieces called corner-cube prisms. Scientists on Earth could send laser pulses towards the Moon, and the reflector would send some of that light back.'
+        ],
+        image: '/images/retroreflector/corner-cube-prisms.jpg',
+        caption: 'PICTURE 3 — Close-up of the corner-cube prisms: Special glass pieces designed to send laser light back towards its source'
+      },
+      {
+        sectionId: 4,
+        paragraphs: [
+          'By measuring how long the light took to make the round trip, scientists could calculate the distance between Earth and the Moon with great accuracy.'
+        ],
+        image: '/images/retroreflector/laser-experiment-earth-moon.jpg',
+        caption: 'PICTURE 4 — Laser experiment between Earth and Moon: Measuring round-trip light time to calculate Earth-Moon distance with great accuracy'
+      },
+      {
+        sectionId: 5,
+        paragraphs: [
+          'But why leave such a special device behind? Because that was exactly what it was made for. It didn’t need to return to Earth, carry batteries or have anyone switch it on. Its job was to remain on the Moon and help scientists for years to come.'
+        ],
+        image: '/images/retroreflector/reflector-resting-on-moon.jpg',
+        caption: 'PICTURE 5 — The reflector resting on the Moon: The little mirror that stayed behind, continuing to help Earth listen to the Moon through light'
+      },
+      {
+        sectionId: 6,
+        paragraphs: [
+          'The astronauts returned home, but their little mirror stayed behind. And even today, it continues to help Earth listen to the Moon through light.'
+        ],
+        closingTribute: 'The astronauts returned home, their little mirror stayed behind. And even today, it continues to help Earth listen to the Moon through light.'
+      }
+    ],
 
     timeline: [
       {

@@ -350,13 +350,26 @@ export default function MissionDetailView({
                       <figcaption className="p-4 sm:p-5 border-t border-slate-800 bg-gradient-to-r from-slate-950 via-slate-900/80 to-slate-950">
                         <div className="flex items-start gap-3">
                           <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0 mt-1 animate-pulse"></span>
-                          <div className="space-y-1">
-                            <span className="text-[10px] font-mono tracking-widest text-cyan-400 uppercase font-bold block">
-                              Photograph Tagline
-                            </span>
-                            <p className="font-telemetry text-sm sm:text-base text-cyan-200 font-medium tracking-wide leading-relaxed">
-                              {chapter.caption}
-                            </p>
+                          <div className="space-y-1 flex-1">
+                            {chapter.caption.includes(':') ? (
+                              <>
+                                <span className="text-xs sm:text-sm font-cinematic font-bold text-white tracking-wider uppercase block">
+                                  {chapter.caption.split(':')[0].trim()}
+                                </span>
+                                <p className="font-telemetry text-xs sm:text-sm text-cyan-300 font-medium tracking-wide leading-relaxed">
+                                  {chapter.caption.split(':').slice(1).join(':').trim()}
+                                </p>
+                              </>
+                            ) : (
+                              <>
+                                <span className="text-[10px] font-mono tracking-widest text-cyan-400 uppercase font-bold block">
+                                  Photograph Tagline
+                                </span>
+                                <p className="font-telemetry text-sm sm:text-base text-cyan-200 font-medium tracking-wide leading-relaxed">
+                                  {chapter.caption}
+                                </p>
+                              </>
+                            )}
                           </div>
                         </div>
                       </figcaption>
