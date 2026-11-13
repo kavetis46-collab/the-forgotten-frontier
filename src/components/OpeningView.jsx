@@ -168,7 +168,7 @@ export default function OpeningView({ onBegin }) {
         <div
           className="w-full h-[28vh] sm:h-[34vh]"
           style={{
-            backgroundImage: "url('/textures/moon.jpg')",
+            backgroundImage: `url('${import.meta.env.BASE_URL}textures/moon.jpg')`,
             backgroundSize: '240% auto',
             backgroundPosition: 'center 64%',
             WebkitMaskImage:

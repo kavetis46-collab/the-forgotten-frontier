@@ -74,13 +74,14 @@ export default function CosmicBackground({ currentView, targetBody, isWarping })
     container.appendChild(renderer.domElement);
 
     // Texture Loader for real NASA textures stored in public/textures/
+    const baseUrl = import.meta.env.BASE_URL;
     const textureLoader = new THREE.TextureLoader();
-    const earthTexture = textureLoader.load('/textures/earth.jpg');
-    const moonTexture = textureLoader.load('/textures/moon.jpg');
-    const marsTexture = textureLoader.load('/textures/mars.jpg');
-    const sunTexture = textureLoader.load('/textures/sun.jpg');
-    const jupiterTexture = textureLoader.load('/textures/jupiter.jpg');
-    const saturnTexture = textureLoader.load('/textures/saturn.jpg');
+    const earthTexture = textureLoader.load(`${baseUrl}textures/earth.jpg`);
+    const moonTexture = textureLoader.load(`${baseUrl}textures/moon.jpg`);
+    const marsTexture = textureLoader.load(`${baseUrl}textures/mars.jpg`);
+    const sunTexture = textureLoader.load(`${baseUrl}textures/sun.jpg`);
+    const jupiterTexture = textureLoader.load(`${baseUrl}textures/jupiter.jpg`);
+    const saturnTexture = textureLoader.load(`${baseUrl}textures/saturn.jpg`);
 
     // ================= LIGHTING =================
     // Sun position: cinematic key light from upper-right — illuminates Moon & Mars dramatically

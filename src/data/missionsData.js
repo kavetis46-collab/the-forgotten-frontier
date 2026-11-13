@@ -1,6 +1,8 @@
 // Comprehensive dataset for the 6 missions featured in THE FORGOTTEN FRONTIER
 // Curated with historical accuracy, real NASA coordinates, timelines, trivia, and quizzes.
 
+const BASE = import.meta.env.BASE_URL;
+
 export const MISSIONS = [
   // ===================== MOON MISSIONS =====================
   {
@@ -38,7 +40,7 @@ export const MISSIONS = [
           'That is exactly what happened during Apollo 11.',
           'On 16 July 1969, three astronauts — Neil Armstrong, Buzz Aldrin and Michael Collins — began their historic journey aboard the Apollo 11 mission.'
         ],
-        image: '/images/apollo11/apollo11-astronauts.jpg',
+        image: `${BASE}images/apollo11/apollo11-astronauts.jpg`,
         caption: 'Astronaut Michael Collins (90), who stayed behind in Apollo 11 — Neil Armstrong, Buzz Aldrin and Michael Collins.'
       },
       {
@@ -47,7 +49,7 @@ export const MISSIONS = [
           'They were heading towards the Moon, carrying the hopes and curiosity of millions of people on Earth. Their spacecraft travelled through space for several days before reaching lunar orbit.',
           'However, not all three astronauts would land on the Moon. Michael Collins stayed in the Command Module, while Armstrong and Aldrin entered a smaller spacecraft called Eagle.'
         ],
-        image: '/images/apollo11/eagle-lunar-lander.jpg',
+        image: `${BASE}images/apollo11/eagle-lunar-lander.jpg`,
         caption: "Far above the Earth, NASA's Apollo lunar lander put astronauts on the moon."
       },
       {
@@ -57,7 +59,7 @@ export const MISSIONS = [
           'On 20 July 1969, it successfully landed at a place called Tranquility Base. The message sent to Earth was unforgettable:'
         ],
         transmissionQuote: 'Houston, Tranquility Base here. The Eagle has landed.',
-        image: '/images/apollo11/buzz-aldrin-moonwalk.jpg',
+        image: `${BASE}images/apollo11/buzz-aldrin-moonwalk.jpg`,
         caption: 'Apollo 11: NASA video of first moon walk resurfaces — Buzz Aldrin on the lunar surface.'
       },
       {
@@ -75,7 +77,7 @@ export const MISSIONS = [
           'Eagle was designed in two stages. The lower part, called the Descent Stage, helped the spacecraft land. The upper part, called the Ascent Stage, carried the astronauts back into lunar orbit.',
           'When the astronauts were ready to leave, the Ascent Stage lifted off, while the Descent Stage stayed behind.'
         ],
-        image: '/images/apollo11/apollo11-liftoff-pad39a.jpg',
+        image: `${BASE}images/apollo11/apollo11-liftoff-pad39a.jpg`,
         caption: 'Apollo 11 liftoff from pad 39A | The Planetary Society'
       },
       {
@@ -206,7 +208,7 @@ export const MISSIONS = [
         paragraphs: [
           'Imagine a tiny electric car driving across a world with no roads, no traffic and no petrol stations. Sounds unusual, right? Yet, this really happened on the Moon.'
         ],
-        image: '/images/apollo15/moon-buggy-lrv.jpg',
+        image: `${BASE}images/apollo15/moon-buggy-lrv.jpg`,
         caption: 'PICTURE 1 — The Moon Buggy: 45 Years Since the First Lunar Rover Drive on the Moon'
       },
       {
@@ -214,7 +216,7 @@ export const MISSIONS = [
         paragraphs: [
           'On Apollo 15, astronauts David Scott and James Irwin had something no Moon explorers had used before — a vehicle of their own. It was called the Lunar Roving Vehicle, or simply, the Moon Buggy. With four wheels and battery power, it was ready to explore a world humans had only walked across before.'
         ],
-        image: '/images/apollo15/david-scott-driving.jpg',
+        image: `${BASE}images/apollo15/david-scott-driving.jpg`,
         caption: "PICTURE 2 — David Scott driving the rover: NASA's first moon buggy mission celebrates 50th anniversary"
       },
       {
@@ -222,7 +224,7 @@ export const MISSIONS = [
         paragraphs: [
           'The little vehicle travelled across the Hadley–Apennine region, carrying the astronauts over the lunar landscape. They explored places beyond walking distance, collected Moon rocks and discovered more about the world beneath their feet.'
         ],
-        image: '/images/apollo15/collecting-moon-samples.jpg',
+        image: `${BASE}images/apollo15/collecting-moon-samples.jpg`,
         caption: 'PICTURE 3 — Collecting Moon samples: Astronauts exploring the Hadley–Apennine region with the Moon Buggy'
       },
       {
@@ -230,7 +232,7 @@ export const MISSIONS = [
         paragraphs: [
           'But the journey had an ending. When it was time for David Scott and James Irwin to leave the Moon and rejoin Alfred Worden in orbit, there was no journey home for their four-wheeled companion. The astronauts took off, leaving the Moon Buggy right where its adventure had ended.'
         ],
-        image: '/images/apollo15/rover-left-on-moon.jpg',
+        image: `${BASE}images/apollo15/rover-left-on-moon.jpg`,
         caption: 'PICTURE 4 — The rover left on the Moon: The Apollo 15 Lunar Rover parked forever at Hadley Rille'
       },
       {
@@ -344,7 +346,7 @@ export const MISSIONS = [
       latFormatted: "0.6734° N",
       lngFormatted: "23.4731° E"
     },
-    heroImage: '/images/retroreflector/the-lunar-reflector-cover.jpg',
+    heroImage: `${BASE}images/retroreflector/the-lunar-reflector-cover.jpg`,
     heroAlt: 'The Apollo 11 Lunar Laser Ranging Retroreflector sitting on the Moon, aimed back at planet Earth',
     accentColor: '#38bdf8',
     status: 'ACTIVE – Still pinged by lasers today',
@@ -359,7 +361,7 @@ export const MISSIONS = [
         paragraphs: [
           'Imagine a tiny object sitting silently on the Moon, with no batteries, no wires and no one to operate it. Yet, even after more than 50 years, scientists on Earth can still use it to study the Moon.'
         ],
-        image: '/images/retroreflector/the-lunar-reflector.jpg',
+        image: `${BASE}images/retroreflector/the-lunar-reflector.jpg`,
         caption: 'PICTURE 1 — The Lunar Reflector: Resting on the Moon'
       },
       {
@@ -367,7 +369,7 @@ export const MISSIONS = [
         paragraphs: [
           'During Apollo 11, astronaut Buzz Aldrin placed a special device on the lunar surface. It was called a Laser Retroreflector. Unlike an ordinary mirror, it was designed to send incoming laser light back towards its source.'
         ],
-        image: '/images/retroreflector/buzz-aldrin-deploying-reflector.jpg',
+        image: `${BASE}images/retroreflector/buzz-aldrin-deploying-reflector.jpg`,
         caption: 'PICTURE 2 — Buzz Aldrin deploying the reflector: Astronaut placing the retroreflector on the lunar surface'
       },
       {
@@ -375,7 +377,7 @@ export const MISSIONS = [
         paragraphs: [
           'Inside this small device were special glass pieces called corner-cube prisms. Scientists on Earth could send laser pulses towards the Moon, and the reflector would send some of that light back.'
         ],
-        image: '/images/retroreflector/corner-cube-prisms.jpg',
+        image: `${BASE}images/retroreflector/corner-cube-prisms.jpg`,
         caption: 'PICTURE 3 — Close-up of the corner-cube prisms: Special glass pieces designed to send laser light back towards its source'
       },
       {
@@ -383,7 +385,7 @@ export const MISSIONS = [
         paragraphs: [
           'By measuring how long the light took to make the round trip, scientists could calculate the distance between Earth and the Moon with great accuracy.'
         ],
-        image: '/images/retroreflector/laser-experiment-earth-moon.jpg',
+        image: `${BASE}images/retroreflector/laser-experiment-earth-moon.jpg`,
         caption: 'PICTURE 4 — Laser experiment between Earth and Moon: Measuring round-trip light time to calculate Earth-Moon distance with great accuracy'
       },
       {
@@ -391,7 +393,7 @@ export const MISSIONS = [
         paragraphs: [
           'But why leave such a special device behind? Because that was exactly what it was made for. It didn’t need to return to Earth, carry batteries or have anyone switch it on. Its job was to remain on the Moon and help scientists for years to come.'
         ],
-        image: '/images/retroreflector/reflector-resting-on-moon.jpg',
+        image: `${BASE}images/retroreflector/reflector-resting-on-moon.jpg`,
         caption: 'PICTURE 5 — The reflector resting on the Moon: The little mirror that stayed behind, continuing to help Earth listen to the Moon through light'
       },
       {

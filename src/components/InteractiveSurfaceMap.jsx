@@ -117,7 +117,8 @@ export default function InteractiveSurfaceMap({ mission }) {
     scene.add(new THREE.AmbientLight(0x334155, 0.8));
 
     // Load actual texture for globe
-    const texPath = isMoon ? '/textures/moon.jpg' : '/textures/mars.jpg';
+    const baseUrl = import.meta.env.BASE_URL;
+    const texPath = isMoon ? `${baseUrl}textures/moon.jpg` : `${baseUrl}textures/mars.jpg`;
     const texture = new THREE.TextureLoader().load(texPath);
 
     const sphereGeo = new THREE.SphereGeometry(1.4, 48, 48);
